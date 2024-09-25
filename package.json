@@ -1,0 +1,47 @@
+{
+  "name": "subtle-stirrings-fe",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev --force",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@ant-design/icons-vue": "^7.0.1",
+    "@antv/l7": "^2.22.0",
+    "@antv/l7-layers": "^2.22.0",
+    "@antv/l7-maps": "^2.22.0",
+    "@types/d3": "^7.4.3",
+    "ant-design-vue": "^4.2.3",
+    "axios": "^1.7.2",
+    "build": "^0.1.4",
+    "d3": "^7.9.0",
+    "d3-geo": "^3.1.1",
+    "esbuild-plugin-decorators": "^0.0.3",
+    "extendable-media-recorder": "^9.2.4",
+    "internmap": "^2.0.3",
+    "rxjs": "^7.8.1",
+    "vue": "^3.4.29",
+    "vue-router": "^4.4.0",
+    "vuex": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/d3": "^7.4.3",
+    "@types/node": "^20.16.7",
+    "@types/vue": "^2.0.0",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "css-loader": "^7.1.2",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.6.0",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.1",
+    "vite": "^5.3.1",
+    "vue-loader": "^17.4.2",
+    "vue-template-compiler": "^2.7.16",
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
+  }
+}

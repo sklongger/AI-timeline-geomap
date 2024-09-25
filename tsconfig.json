@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    // ... other options ...
+    "module": "esnext", // 支持 ES 模块语法
+    "moduleResolution": "node", // 使用 Node.js 模块解析机制
+    "allowSyntheticDefaultImports": true, // 允许从默认导出导入
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "types": [
+      "node"
+      // "vue", // 添加类型声明文件
+      // "vuex"
+    ],
+    "baseUrl": "./", // 设置 baseUrl 为项目根目录
+    "paths": { // 路径别名
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "resolveJsonModule": true,
+    "lib": [
+      "es2015",
+      "dom"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/**/*.jpg"
+, "config/styleConfig.ts"  ],
+}
