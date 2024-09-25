@@ -21,3 +21,5 @@ temp_img
 *.njsproj
 *.sln
 *.sw?
+
+depoly2github.sh
