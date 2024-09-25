@@ -217,7 +217,7 @@ const createMarker = (svg, projection, path, point, locationName = '') => {
         display: flex;
         justify-content: center;
         align-items: center;
-        background-image: url('@/assets/background9.jpg');
+        background-image: url('@/assets/background.jpg');
         background-size: cover;
         background-position: center;
 
