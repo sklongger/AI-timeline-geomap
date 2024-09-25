@@ -1,12 +1,14 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-console.log(process.env.NODE_ENV)
-const base = process.env.NODE_ENV === 'production' ? '/' : '/'
+
+const base = process.env.NODE_ENV === 'production' ? '/AI-timeline-geomap/' : '/'
 export default defineConfig({
-  // base: base,
+  base: base,
+  publicPath: base,
   build: {
-    sourcemap: true
+    sourcemap: true,
+    outDir: 'dist',
   },
   plugins: [vue()],
   resolve: {
@@ -16,6 +18,12 @@ export default defineConfig({
     }
   },
   server: {
-    host: '0.0.0.0'//方便真机调试
+    host: '0.0.0.0',//方便真机调试
+    proxy: {
+      '/api': {
+        target: 'http://101.42.16.7',
+        changeOrigin: true
+      }
+    }
   }
 })
