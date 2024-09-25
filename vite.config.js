@@ -20,8 +20,8 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',//方便真机调试
     proxy: {
-      '/api': {
-        target: 'http://101.42.16.7',
+      '/autumnRiver': {
+        target: 'http://101.42.16.7/autumnRiver',
         changeOrigin: true
       }
     }
