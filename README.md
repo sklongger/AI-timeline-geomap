@@ -14,8 +14,8 @@
 
 [每日科技趣闻](http://101.42.16.7/timemap)
 <figure class="half">
-    ![371054510-8ea7f28c-3dc4-4f39-8604-830a1c873c7d](https://github.com/user-attachments/assets/512488e0-6147-487a-86e1-4dc951503507)
-    ![371054723-5058ddf0-df6b-434a-a010-11c62b9741b0](https://github.com/user-attachments/assets/0487707d-c6a4-4261-b052-09754ebd24bc)
+    <img src="https://github.com/user-attachments/assets/512488e0-6147-487a-86e1-4dc951503507">
+    <img src="https://github.com/user-attachments/assets/0487707d-c6a4-4261-b052-09754ebd24bc">
 </figure>
 
 
