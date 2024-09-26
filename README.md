@@ -4,15 +4,17 @@
     <img src="icon.ico" width="100"/>
 </p>
 
-## AI-timeline-geomap: 一套可以随心所欲构建时间-空间信息展示的框架
+## AI-timeline-geomap: A framework that allows for the flexible construction of time-space information displays.
 
-我们设计构建了**AI-timeline-geomap**，因为我们相信通过耦合的时空来承载展现信息能够数倍提升信息的呈现效果，诸如新闻、历史，以及个人游记、商业调研、知识整合等等，可以将宏观、框架性信息第一时间灌输给用户，为此理念，我们并不执着于推广现成的UI组件，展示的组件demo仅为抛砖引玉，因此代码中的时空组件可以灵活地根据需求替换开发，构建在时间轴、地图组件上的图文组件更是可以灵活替换。
+We designed and built **AI-timeline-geomap** because we believe that presenting information through coupled space-time can significantly enhance the effectiveness of information delivery. This applies to various types of content, such as news, history, personal travel logs, business research, and knowledge integration, allowing macro and structural information to be conveyed to users immediately. Adhering to this philosophy, we are not fixated on promoting existing UI components; the component demos provided are merely illustrative. Therefore, the spatiotemporal components in the code can be flexibly replaced or developed according to needs. The multimedia components built on top of timelines and maps can also be flexibly interchanged.
 
-我们在demo中使用了RAG等现代AI技术来构建时空信息，构建更强大完备的AI套件来适配时空系统，是未来的重点目标，会在前端代码较为完善后展开，也希望优秀的开发者一同探讨
+In our demo, we utilized modern AI technologies such as RAG to construct spatiotemporal information. Building a more powerful and comprehensive AI suite to better adapt to the spatiotemporal system is a key goal for the future. This will be pursued after the frontend code is relatively mature. We also hope to collaborate with excellent developers on this endeavor.
+
+[[中文README](https://github.com/sklongger/AI-timeline-geomap/blob/main/README.md)]
 
 ## 🎥 Demo List
 
-[每日科技趣闻(尚未对移动端适配)](http://101.42.16.7/timemap)
+[daily science news(Not yet adapted for mobile devices.)](http://101.42.16.7/timemap)
 <figure class="half">
     <img src="https://github.com/user-attachments/assets/512488e0-6147-487a-86e1-4dc951503507">
     <img src="https://github.com/user-attachments/assets/0487707d-c6a4-4261-b052-09754ebd24bc">
@@ -21,5 +23,5 @@
 
 
 
-## 代码框架
-待续
+## Code Framework
+To Be Continued
