@@ -9,7 +9,8 @@
 我们设计构建了**AI-timeline-geomap**，因为我们相信通过耦合的时空来承载展现信息能够数倍提升信息的呈现效果，诸如新闻、历史，以及个人游记、商业调研、知识整合等等，可以将宏观、框架性信息第一时间灌输给用户，为此理念，我们并不执着于推广现成的UI组件，展示的组件demo仅为抛砖引玉，因此代码中的时空组件可以灵活地根据需求替换开发，构建在时间轴、地图组件上的图文组件更是可以灵活替换。
 
 我们在demo中使用了RAG等现代AI技术来构建时空信息，构建更强大完备的AI套件来适配时空系统，是未来的重点目标，会在前端代码较为完善后展开，也希望优秀的开发者一同探讨
-English README[http://xxx]
+
+[[English README](https://github.com/sklongger/AI-timeline-geomap/blob/main/README.md)]
 
 ## 🎥 Demo List
 
