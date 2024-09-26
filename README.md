@@ -10,7 +10,7 @@ We designed and built **AI-timeline-geomap** because we believe that presenting 
 
 In our demo, we utilized modern AI technologies such as RAG to construct spatiotemporal information. Building a more powerful and comprehensive AI suite to better adapt to the spatiotemporal system is a key goal for the future. This will be pursued after the frontend code is relatively mature. We also hope to collaborate with excellent developers on this endeavor.
 
-[[中文README](https://github.com/sklongger/AI-timeline-geomap/blob/main/README.md)]
+[[中文README](https://github.com/sklongger/AI-timeline-geomap/blob/main/README_zh.md)]
 
 ## 🎥 Demo List
 
