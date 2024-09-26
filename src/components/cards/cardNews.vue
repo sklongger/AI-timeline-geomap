@@ -48,6 +48,7 @@
 </template>
 
 <script setup lang="ts">
+import { message } from 'ant-design-vue';
 import { useStore } from 'vuex';
 import { ref, reactive, onMounted, onBeforeMount, watch } from 'vue';
 import { LeftSquareFilled, RightSquareFilled } from '@ant-design/icons-vue';
@@ -124,19 +125,20 @@ const getDate: () => Calender = () => {
 }
 
 const turnPage = (type: 'pre' | 'next') => {
-    let payload = new Date();
-    if (type === 'pre') {
-        payload.setDate(date.current.getDate() - 1)
-    } else {
-        payload.setDate(date.current.getDate() + 1)
-    }
-    store.commit('timeline/updateTimeline', {
-        msgType: 'tech_news',
-        // 字符串时间 yyyy-mm-dd，current日期往前推一天
-        updateData: {
-            date: payload.toLocaleDateString().split(' ')[0].replace(/\//g, '-')
-        }
-    })
+    message.info('抱歉，此demo暂时尚未实时更新数据');
+    // let payload = new Date();
+    // if (type === 'pre') {
+    //     payload.setDate(date.current.getDate() - 1)
+    // } else {
+    //     payload.setDate(date.current.getDate() + 1)
+    // }
+    // store.commit('timeline/updateTimeline', {
+    //     msgType: 'tech_news',
+    //     // 字符串时间 yyyy-mm-dd，current日期往前推一天
+    //     updateData: {
+    //         date: payload.toLocaleDateString().split(' ')[0].replace(/\//g, '-')
+    //     }
+    // })
 }
 
 watch(() => props.cardShow, (newVal) => {
