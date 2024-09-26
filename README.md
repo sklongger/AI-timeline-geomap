@@ -1,7 +1,7 @@
 # AI-timeline-geomap
 
 <p align="center">
-    <img src="favicon.ico" width="100"/>
+    <img src="icon.ico" width="100"/>
 </p>
 
 ## AI-timeline-geomap: 一套可以随心所欲构建时间-空间信息展示的框架
@@ -11,5 +11,10 @@
 我们在demo中使用了RAG等现代AI技术来构建时空信息，构建更强大完备的AI套件来适配时空系统，是我们未来的重点目标，会在前端代码较为完善后展开，也希望优秀的开发者一同探讨
 
 ## 🎥 Demo List
+
+[每日科技趣闻](http://101.42.16.7/timemap)
+![image](https://github.com/user-attachments/assets/8ea7f28c-3dc4-4f39-8604-830a1c873c7d)![image](https://github.com/user-attachments/assets/5058ddf0-df6b-434a-a010-11c62b9741b0)
+
+
 
 ## 代码框架
