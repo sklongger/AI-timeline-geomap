@@ -1,0 +1,2 @@
+import{p as i,t as b}from"./rxjs-interop-DCd2Ic5g.js";const a=o=>(t,s,c)=>o(r=>{const e=n=>r.next(n);return t.addEventListener(s,e,c),()=>t.removeEventListener(s,e,c)}),p=(o,t)=>{const s=()=>{},c=r=>typeof r[0]=="function";return r=>{const e=(...n)=>{const u=r(c(n)?t({next:n[0]}):t(...n));return u!==void 0?u:s};return e[Symbol.observable]=()=>({subscribe:(...n)=>({unsubscribe:e(...n)})}),o(e)}},f=p(i,b),d=a(f);export{d as o};
+//# sourceMappingURL=subscribable-things-Cegrwan0.js.map

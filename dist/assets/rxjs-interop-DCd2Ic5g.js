@@ -1,0 +1,2 @@
+const e=Symbol.observable||"@@observable";function n(o){return Symbol.observable||(typeof o=="function"&&o.prototype&&o.prototype[Symbol.observable]?(o.prototype[e]=o.prototype[Symbol.observable],delete o.prototype[Symbol.observable]):(o[e]=o[Symbol.observable],delete o[Symbol.observable])),o}const t=()=>{},l=o=>{throw o};function b(o){return o?o.next&&o.error&&o.complete?o:{complete:(o.complete??t).bind(o),error:(o.error??l).bind(o),next:(o.next??t).bind(o)}:{complete:t,error:l,next:t}}export{n as p,b as t};
+//# sourceMappingURL=rxjs-interop-DCd2Ic5g.js.map

@@ -28,7 +28,7 @@ const X_OFFSET = SIZE / 2
 const Y_OFFSET = SIZE / 2
 let lat_offset = 0
 let lng_offset = 0
-
+let showDelay
 onMounted(() => {
     const projection = d3.geoOrthographic()
         .scale(SIZE / 2 - 0.5)
@@ -77,7 +77,7 @@ const centerPosition = (svg, projection, path, state, animate = true) => {
     const preLatitude = state.preLocation[1]
     const pointStart = [lng_offset - preLongitude, lat_offset - preLatitude]
     const pointEnd = [lng_offset - longitude, lat_offset - latitude]
-
+    clearTimeout(showDelay)
     cardShow.value = false
     svg.selectAll('foreignObject').remove();
     let arcPath = null;
@@ -157,8 +157,10 @@ const centerPosition = (svg, projection, path, state, animate = true) => {
                     arcPath.remove()
                     arcIcon.remove()
                 }
-                setTimeout(() => {
+                
+                showDelay = setTimeout(() => {
                     if (animate) {
+                        console.log('show!!!')
                         cardShow.value = true
                     }
                 }, 1500)

@@ -199,8 +199,8 @@ async function getTimelineData(date: string) {
         preloadList = [...preloadList, ...element['imgs']]
     });
     refreshFlag.value = !refreshFlag.value
-    await preloadImages(preloadList)
     renderFlags()
+    await preloadImages(preloadList)
 }
 async function updateTimelineData() {
     store.subscribe(async (mutation, state) => {
@@ -289,6 +289,7 @@ async function updateTimelineData() {
             position: absolute;
             height: 215px;
             width: 130%;
+            transition: left 0.5s ease;
 
             .suffix {
                 .asklike {
