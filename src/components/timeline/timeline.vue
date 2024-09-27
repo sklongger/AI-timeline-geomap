@@ -208,7 +208,6 @@ async function updateTimelineData() {
         if (mutation.type === 'timeline/updateTimeline') {
             const msgType = state.msgType
             const updateData = state.updateData
-            console.log(msgType)
             switch (msgType) {
                 case 'tech_news':
                     await getTimelineData(updateData.date)

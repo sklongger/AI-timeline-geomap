@@ -160,7 +160,6 @@ const centerPosition = (svg, projection, path, state, animate = true) => {
                 
                 showDelay = setTimeout(() => {
                     if (animate) {
-                        console.log('show!!!')
                         cardShow.value = true
                     }
                 }, 1500)
