@@ -1,6 +1,6 @@
 <template>
     <transition name="card-fade" class="card">
-        <a-card hoverable v-show="cardShow">
+        <Card hoverable v-show="cardShow">
             <template #cover>
                 <div class="img-container">
                     <div v-for="(imgSrc, index) in cardInfo.imgs" :key="index" class="img-item">
@@ -43,12 +43,12 @@
                     </p>
                 </div>
             </div>
-        </a-card>
+        </Card>
     </transition>
 </template>
 
 <script setup lang="ts">
-import { message } from 'ant-design-vue';
+import { message, Card } from 'ant-design-vue';
 import { useStore } from 'vuex';
 import { ref, reactive, onMounted, onBeforeMount, watch } from 'vue';
 import { LeftSquareFilled, RightSquareFilled } from '@ant-design/icons-vue';

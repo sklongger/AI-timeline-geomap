@@ -29,8 +29,6 @@ const recordVideo = async () => {
         // 添加媒体录制器事件监听器
         mediaRecorder.ondataavailable = (event) => {
             // 将录制的数据添加到数组中
-            console.log('recording!!!')
-            console.log(event.data)
             recordedChunks.push(event.data);
         };
 
@@ -39,7 +37,6 @@ const recordVideo = async () => {
 
     } catch (error) {
         // 处理错误
-        console.log('recording error!!!')
         console.error(error);
     }
 }
