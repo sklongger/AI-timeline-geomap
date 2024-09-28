@@ -1,66 +1,83 @@
 <template>
-    <transition name="card-fade" class="card">
-        <Card hoverable v-show="cardShow">
-            <template #cover>
-                <div class="img-container">
-                    <div v-for="(imgSrc, index) in cardInfo.imgs" :key="index" class="img-item">
-                        <img alt="example" :src="imgSrc" :style="{ 'max-width': 1000 / cardInfo.imgs.length + 'px' }" />
+    <transition name="card-fade">
+        <div class="card_container" v-show="cardShow">
+            <Card hoverable class="card">
+                <template #cover>
+                    <div class="img-container">
+                        <div v-for="(imgSrc, index) in cardInfo.imgs.slice(0, 2)" :key="index" class="img-item">
+                            <img :src="imgSrc" class="img-ele" />
+                        </div>
+                        <div class="calender" v-if="!isMobile">
+                            <div class="year_month">{{ date.yearMonth }}</div>
+                            <div class="day-container">
+                                <div class="date">{{ date.date }}</div>
+                                <div class="day">{{ date.day }}</div>
+                            </div>
+                            <div class="tech-nice">
+                                <div class="page-icon" @click="turnPage('pre')">
+                                    <LeftSquareFilled style="color: rgb(24, 144, 255);" />
+                                </div>
+                                <div class="suitable">{{ date.suitable }}</div>
+                                <div class="page-icon" @click="turnPage('next')">
+                                    <RightSquareFilled style="color: rgb(24, 144, 255);" />
+                                </div>
+                            </div>
+                            <div class="introduction">我们是秋水灌河团队，借助人工智能，每天更新近期全球范围有趣的科技进展。今日份科学请君小观</div>
+                        </div>
                     </div>
-                    <div class="calender">
-                        <div class="year_month">{{ date.yearMonth }}</div>
-                        <div class="day-container">
-                            <div class="date">{{ date.date }}</div>
-                            <div class="day">{{ date.day }}</div>
+
+                </template>
+                <div class="content-container">
+                    <div class="title">
+                        {{ cardInfo.title }}
+                        <a class="from" :href="cardInfo.titleUrl" target="_blank" v-if="cardInfo.website">(转自{{
+                            cardInfo.website }})</a>
+                    </div>
+                    <div class="meta">
+                        {{ cardInfo.organization }}
+                    </div>
+                    <div class="content">
+                        <div class="content-item" v-for="content, index in cardInfo.content" :key="index">
+                            {{ content }}
                         </div>
-                        <div class="tech-nice">
-                            <div class="page-icon" @click="turnPage('pre')">
-                                <LeftSquareFilled style="color: rgb(24, 144, 255);" />
-                            </div>
-                            <div class="suitable">{{ date.suitable }}</div>
-                            <div class="page-icon" @click="turnPage('next')">
-                                <RightSquareFilled style="color: rgb(24, 144, 255);" />
-                            </div>
-                        </div>
-                        <div class="introduction">我们是秋水灌河团队，借助人工智能，每天更新近期全球范围有趣的科技进展。今日份科学请君小观</div>
                     </div>
                 </div>
 
-            </template>
-            <div class="content-container">
-                <div class="title">
-                    {{ cardInfo.title }}
-                    <a class="from" :href="cardInfo.titleUrl" target="_blank" v-if="cardInfo.website">(转自{{
-                        cardInfo.website }})</a>
-                </div>
-                <div class="meta">
-                    <div>{{ cardInfo.date }}</div>
-                    <div>{{ cardInfo.locationName }}</div>
-                    <div>{{ cardInfo.organization }}</div>
-                </div>
-                <div class="content">
-                    <p v-for="content, index in cardInfo.content" :key="index">
-                        {{ content }}
-                    </p>
-                </div>
-            </div>
-        </Card>
+            </Card>
+        </div>
     </transition>
 </template>
 
 <script setup lang="ts">
 import { message, Card } from 'ant-design-vue';
 import { useStore } from 'vuex';
-import { ref, reactive, onMounted, onBeforeMount, watch } from 'vue';
+import { ref, reactive, onMounted, onBeforeMount, watch, computed } from 'vue';
 import { LeftSquareFilled, RightSquareFilled } from '@ant-design/icons-vue';
-
-const props = defineProps({
-    cardShow: {
-        type: Boolean,
-        default: false
-    }
-});
+import { isMobile } from '@/../config/styleConfig.ts';
 
 const store = useStore();
+const cardShow = computed(() => {
+    const cardShow = store.state.content.cardShow;
+    if (cardShow) {
+        const state = store.state.content;
+        cardInfo.imgs = state.content.imgs;
+        cardInfo.content = state.content.content.split('。').map((item, index, origin) => {
+            if (index != origin.length - 1) {
+                item += '。'
+            }
+            return item
+        });
+        cardInfo.title = state.content.title;
+        cardInfo.subtitle = state.content.subtitle;
+        cardInfo.date = state.content.date;
+        cardInfo.locationName = state.content.locationName;
+        cardInfo.website = state.content.website;
+        cardInfo.titleUrl = state.content.titleUrl;
+        cardInfo.organization = state.content.organization;
+        date.suitable = suitable[Math.floor(Math.random() * suitable.length)]
+    }
+    return cardShow
+})
 interface CardInfo {
     title: string;
     subtitle: string;
@@ -140,191 +157,187 @@ const turnPage = (type: 'pre' | 'next') => {
     //     }
     // })
 }
-
-watch(() => props.cardShow, (newVal) => {
-    if (newVal) {
-        const state = store.state.content;
-        cardInfo.imgs = state.content.imgs;
-        cardInfo.content = state.content.content.split('。').map((item, index, origin) => {
-            if (index != origin.length - 1) {
-                item += '。'
-            }
-            return item
-        });
-        cardInfo.title = state.content.title;
-        cardInfo.subtitle = state.content.subtitle;
-        cardInfo.date = state.content.date;
-        cardInfo.locationName = state.content.locationName;
-        cardInfo.website = state.content.website;
-        cardInfo.titleUrl = state.content.titleUrl;
-        cardInfo.organization = state.content.organization;
-        date.suitable = suitable[Math.floor(Math.random() * suitable.length)]
-    }
-})
 </script>
 
 <style scoped>
-.card {
-    cursor: default;
-    padding: 4px;
-    background: white;
-    box-shadow: 6px 6px 6px #ccc;
-    border-radius: 10px;
-    background: #e5e5e5;
-    padding: 10px 10px 0 10px;
+.card_container {
+    position: absolute;
+    z-index: 1;
+    width: 100vw;
+    height: calc(var(--screen-height--) - var(--timeline-container-height--));
+    background: rgba(0, 0, 0, 0);
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 
-    .content-container {
-        .title {
-            text-align: left;
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            display: flex;
-            /* 垂直居中 */
-            align-items: center;
-
-            .from {
-                font-size: 12px;
-                /* color: #999; */
-                margin-left: 10px;
-            }
+    .card {
+        cursor: default;
+        padding: 10px;
+        box-shadow: 6px 6px 6px #ccc;
+        border-radius: 10px;
+        background: #e5e5e5;
+        width: var(--card-width--);
+        @media screen and (min-width: 600px) {
+            padding-right: var(--card-padding-right--);    
         }
+        
+        height: 100%;
+        overflow-y: auto;
+        
 
-        .meta {
-            display: flex;
-            font-size: 12px;
-            line-height: 12px;
-            color: #999;
-            text-align: left;
-            margin-bottom: 10px;
-        }
-
-        .content {
-            max-width: 800px;
-            text-align: left;
-            font-size: 14px;
-            color: #333;
-            line-height: 1.4;
-
-            p {
-                margin-bottom: 6px;
-            }
-        }
-    }
-
-    .img-container {
-        display: flex;
-        /* align-items: center; */
-        align-items: flex-start;
-        /**水平剧中 */
-        /* justify-content: space-between; */
-        justify-content: space-around;
-
-        .img-item {
-            margin-right: 10px;
-
-            /* 最后一个元素margin-right为0*/
-            &:last-child {
-                margin-right: 0;
-            }
-
-            height: 100%;
-
-            &>img {
-                max-height: calc(80vh - 400px);
-                object-fit: cover;
-                border-radius: 5px;
-            }
-        }
-
-        .calender {
-            /* position: absolute; */
-            width: 130px;
-            height: 120px;
-            display: flex;
-            flex-direction: column;
-            top: 10px;
-            right: -200px;
-            margin: 4px;
+        .img-container {
             padding: 4px;
-            background: rgba(255, 255, 255, 1);
-            border-radius: 5px;
-            color: #333;
-            font-size: 16px;
-            border-radius: 10px;
-            /* background: green; */
+            height: calc(0.45*(100vh - var(--timeline-container-height--) - 80px));
+            width: 95%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-            .year_month {
-                font-weight: bold;
-                margin-bottom: 4px;
-                color: #aaa;
-            }
+            .img-item {
+                width: 100%;
+                height: 100%;
+                box-sizing: border-box;
+                margin-right: 6px;
 
-            .day-container {
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-                font-weight: bold;
-                line-height: 54px;
-
-                .date {
-                    font-weight: bold;
-                    font-size: 50px;
-                    background: #fff;
+                &:last-child {
+                    margin-right: 0;
                 }
 
-                .day {
-                    /* background: red; */
-                    /* width: 30px; */
+                .img-ele {
+                    height: 100%;
+                    max-width: 100%;
+                    object-fit: contain;
+                }
+            }
+
+            .calender {
+                position: absolute;
+                width: 130px;
+                height: 120px;
+                display: flex;
+                flex-direction: column;
+                top: 10px;
+                right: 10px;
+                margin: 4px;
+                padding: 4px;
+                background: rgba(255, 255, 255, 1);
+                border-radius: 5px;
+                color: #333;
+                font-size: 16px;
+                border-radius: 10px;
+
+                .year_month {
+                    font-weight: bold;
+                    margin-bottom: 4px;
+                    color: #aaa;
+                }
+
+                .day-container {
+                    display: flex;
+                    justify-content: space-around;
+                    align-items: center;
+                    font-weight: bold;
+                    line-height: 54px;
+
+                    .date {
+                        font-weight: bold;
+                        font-size: 50px;
+                        background: #fff;
+                    }
+
+                    .day {
+                        font-size: 16px;
+                        writing-mode: vertical-rl;
+                        text-orientation: upright;
+                        line-height: 1.5;
+                        color: rgb(49, 205, 240);
+                    }
+                }
+
+                .tech-nice {
+                    display: flex;
+                    justify-content: space-around;
+                    color: #333;
+                    font-size: 12px;
+                    text-align: right;
+                    margin-top: 4px;
+
+                    .suitable {
+                        color: #666;
+                    }
+
+                    .page-icon {
+                        cursor: pointer;
+                        font-size: 100px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        font-size: 20px;
+                        color: #333;
+                        cursor: pointer;
+                    }
+                }
+
+                .introduction {
+                    position: absolute;
+                    top: 140px;
+
+                    border-radius: 10px;
+                    text-align: justify;
+                    height: 260px;
+                    width: 110px;
+                    margin-top: 10px;
                     font-size: 16px;
                     writing-mode: vertical-rl;
                     text-orientation: upright;
-                    line-height: 1.5;
-                    color: rgb(49, 205, 240);
+                    line-height: 2;
+                    color: #888;
                 }
             }
 
-            .tech-nice {
-                display: flex;
-                justify-content: space-around;
-                color: #333;
-                font-size: 12px;
-                text-align: right;
-                margin-top: 4px;
-
-                .suitable {
-                    color: #666;
-                }
-
-                .page-icon {
-                    cursor: pointer;
-                    font-size: 100px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    font-size: 20px;
-                    color: #333;
-                    cursor: pointer;
-                }
-            }
-
-            .introduction {
-                position: absolute;
-                top: 140px;
-
-                border-radius: 10px;
-                text-align: justify;
-                height: 260px;
-                width: 110px;
-                margin-top: 10px;
-                font-size: 16px;
-                writing-mode: vertical-rl;
-                text-orientation: upright;
-                line-height: 2;
-                color: #888;
-            }
         }
 
+        .content-container {
+            height: calc(0.55*(100vh - var(--timeline-container-height--) - 80px));
+            display: flex;
+            flex-direction: column;
+            
+
+            .title {
+                text-align: left;
+                font-size: var(--card-title-size--);
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+
+                .from {
+                    font-size: 12px;
+                    margin-left: 10px;
+                }
+            }
+
+            .meta {
+                width: 100%;
+                font-size: 12px;
+                line-height: 20px;
+                height: 20px;
+                color: #999;
+                text-align: left;
+            }
+
+            .content {
+                height: 100%;
+                text-align: left;
+                font-size: 14px;
+                color: #333;
+                line-height: 1.4;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+            }
+        }
     }
 }
 

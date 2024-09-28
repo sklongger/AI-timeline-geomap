@@ -1,33 +1,10 @@
+
 const timelineConfig = {
-	"timeline": {
-		"containerId": "timeline_container",
-		"containerWidth": null,
-		"containerHeight": 220,
-		"activeFlag": 0,
-		"offset": 0,
-		"flagWidth": 150,
-		"init": false,
-		"rulerNum": 10,
-		"baseLineOffset": 0.5,
-		"flagOffsetWidth": 1,
-		"rulerMarkerWidth": 70,
-		"rulerMarkers": [
-			{
-				"time": null,
-				"position": null,
-				"timeType": null,
-				"content": null,
-			}
-		],
-		"control": {
-			"startDelay": 500,
-			"record": false,
-			"duration": 2000,
-		},
-	},
+	"init": false,
+	"rulerMarkers": [],
 	"flags": [
 		{
-			"time": "2023-06-10",
+			"timeStr": "2023-06-10",
 			"duration": 18,
 			"location": [
 				104.07,
@@ -41,7 +18,7 @@ const timelineConfig = {
 			"imgs": ["http://127.0.0.1:8080/1.jpg", "http://127.0.0.1:8080/2.jpg", "http://127.0.0.1:8080/0.jpg"],
 			"website": "",
 			"titleUrl": "",
-			"row": 1,
+			"row": "",
 			"order": 0
 		}
 	]

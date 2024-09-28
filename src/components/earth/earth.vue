@@ -5,7 +5,6 @@
                 <div id="globe" v-show="!cardShow"></div>
             </transition>
         </div>
-        <card-news :cardShow="cardShow"></card-news>
     </div>
 </template>
 
@@ -14,16 +13,15 @@ import * as d3 from 'd3';
 import { onMounted, computed, render, h, reactive, ref } from 'vue';
 import { useStore } from 'vuex';
 import { EnvironmentTwoTone } from '@ant-design/icons-vue';
-import CardNews from '@/components/cards/cardNews.vue';
-import styleConfig from '@/../config/styleConfig.ts';
+import { earthStyleConfig } from '@/../config/styleConfig.ts';
 
-let cardShow = ref(false)
 const store = useStore();
-const OCEANCOLOR = styleConfig['earth']['ocean-color']
-const LANDCOLOR = styleConfig['earth']['land-color']
-const COUNTRYCOLOR = styleConfig['earth']['country-color']
-const COUNTRYBORDER = styleConfig['earth']['country-border']
-const SIZE = styleConfig['earth']['globe-size']
+const cardShow = computed(() => { return store.state.content.cardShow;})
+const OCEANCOLOR = earthStyleConfig['ocean-color']
+const LANDCOLOR = earthStyleConfig['land-color']
+const COUNTRYCOLOR = earthStyleConfig['country-color']
+const COUNTRYBORDER = earthStyleConfig['country-border']
+const SIZE = earthStyleConfig['globe-size']
 const X_OFFSET = SIZE / 2
 const Y_OFFSET = SIZE / 2
 let lat_offset = 0
@@ -78,7 +76,7 @@ const centerPosition = (svg, projection, path, state, animate = true) => {
     const pointStart = [lng_offset - preLongitude, lat_offset - preLatitude]
     const pointEnd = [lng_offset - longitude, lat_offset - latitude]
     clearTimeout(showDelay)
-    cardShow.value = false
+    store.commit('content/updateCardShowState', false)
     svg.selectAll('foreignObject').remove();
     let arcPath = null;
     let arcIcon = null
@@ -157,10 +155,10 @@ const centerPosition = (svg, projection, path, state, animate = true) => {
                     arcPath.remove()
                     arcIcon.remove()
                 }
-                
+
                 showDelay = setTimeout(() => {
                     if (animate) {
-                        cardShow.value = true
+                        store.dispatch('content/updateCardShowState', true)
                     }
                 }, 1500)
             });
@@ -199,7 +197,7 @@ const createMarker = (svg, projection, path, point, locationName = '') => {
 .earth {
     position: absolute;
     width: 100%;
-    height: calc(100vh - 200px);
+    height: calc(var(--screen-height--) - var(--timeline-container-height--));
     display: flex;
     justify-content: center;
     align-items: center;
@@ -212,7 +210,7 @@ const createMarker = (svg, projection, path, point, locationName = '') => {
         min-width: 100%;
         max-width: 100%;
         padding: 0 20% 0 0;
-        height: calc(100vh - 220px);
+        height: 100%;
         overflow: hidden;
         z-index: -1;
         display: flex;

@@ -1,15 +1,14 @@
-import { watchEffect, reactive } from 'vue';
 const renderFlag = (el, binding) => {
     const { flag, timeline, refreshFlag, index } = binding.value
     const marker = el.querySelector('div.marker');
     Object.assign(el.style, {
-        "left": flag["position"] + 'px',
-        "height": timeline["flagHeight"]
+        "left": flag.position + 'px',
+        "height": timeline.flagHeight
     })
-    const zIndex = timeline.activeFlag == index ? 999 : 10 - index
+    const zIndex = timeline.activeFlag == index ? 100 : 10 - index
     Object.assign(marker.style, {
-        "top": flag["layer"] + 'px',
-        "width": timeline["flagWidth"] + 'px',
+        "top": flag.layer + 'px',
+        "width": timeline.flagWidth + 'px',
         "z-index": zIndex,
         // "background": "background: rgba(79, 251, 223, 0.8);"
     })

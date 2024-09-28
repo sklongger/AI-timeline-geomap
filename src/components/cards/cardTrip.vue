@@ -75,7 +75,7 @@ watch(() => props.cardShow, (newVal) => {
             height: 100%;
 
             &>img {
-                max-height: calc(80vh - 220px);
+                max-height: calc(80vh - var(--timeline-container-height--));
                 object-fit: cover;
                 border-radius: 5px;
             }

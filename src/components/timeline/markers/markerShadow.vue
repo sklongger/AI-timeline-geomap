@@ -3,8 +3,8 @@
         <div class='container'>
             <img class="icon" src="@/assets/icon.jpg">
             <div class="content">
-                <div class="title">{{ title.slice(0, 12) }}</div>
-                <div class="subtitle" v-if="subtitle">{{ subtitle.slice(0, 9) }}</div>
+                <div class="title">{{ title }}</div>
+                <div class="subtitle" v-if="subtitle">{{ subtitle }}</div>
             </div>
             <div class='suffix'></div>
         </div>
@@ -16,6 +16,7 @@
 </template>
 
 <script setup>
+import { isMobile } from '@/../config/styleConfig.ts';
 const props = defineProps({
     title: {
         type: String,
@@ -35,8 +36,6 @@ const props = defineProps({
 .marker {
     position: absolute;
     left: 5.5px;
-    --marker-width--: 150px;
-    --marker-height--: 48px;
     width: var(--marker-width--);
     height: var(--marker-height--);
     border-radius: 5px;
@@ -51,8 +50,8 @@ const props = defineProps({
     .container {
         position: absolute;
         top: 0;
-        height: calc(var(--marker-height--) - 7px);
-        width: calc(var(--marker-width--) - 6px);
+        height: calc(var(--marker-height--) - 6px);
+        width: calc(var(--marker-width--) - 5px);
         border-radius: 4px;
         background: rgb(110, 225, 205);
         margin-left: -4px;
@@ -65,10 +64,9 @@ const props = defineProps({
 
         .icon {
             margin: 4px;
-            width: 35px;
+            width: 30px;
             height: auto;
             border-radius: 2px 40% 40% 2px;
-            /* display: none; */
         }
 
         .content {
@@ -77,24 +75,32 @@ const props = defineProps({
             display: flex;
             flex-direction: column;
             justify-content: space-around;
-            line-height: 0;
+            overflow: hidden;
+
 
             .title {
                 color: #777;
                 font-size: 12px;
-                line-height: 0;
+                line-height: 12px;
                 font-weight: bold;
-                background: black;
                 padding-left: 4px;
                 text-align: left;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .subtitle {
+                width: 90%;
                 color: #888;
                 font-size: 9px;
-                line-height: 0;
+                height: 9px;
+                line-height: 1;
                 padding-left: 4px;
                 text-align: left;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
 
@@ -111,26 +117,28 @@ const props = defineProps({
 }
 
 .marker_active {
-    /* background: rgba(167, 247, 139, 1); */
-    /* z-index: 999; */
+    background: rgb(26, 170, 112);
+    .container {
+        background: rgb(105, 242, 219);
+    }
 }
 
 .pole {
     width: 1px;
     position: absolute;
-    height: 196px;
+    height: calc(var(--timeline-container-height--) - 24px);
     top: 0;
-    background: rgba(0, 0, 0, 0.1);
-    z-index: 101;
+    background: rgba(100, 100, 100, 0.2);
+    z-index: 2;
 
     .polefooter {
         position: relative;
-        top: 196px;
+        top: calc(var(--timeline-container-height--) - 24px);
         left: -1.5px;
         width: 4px;
         height: 4px;
         border-radius: 2px;
-        background: rgb(0, 0, 0);
+        background: rgba(0, 0, 0, 0.8);
     }
 
     .poleheader {
