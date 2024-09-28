@@ -12,9 +12,12 @@ In our demo, we utilized modern AI technologies such as RAG to construct spatiot
 
 [[中文README](https://github.com/sklongger/AI-timeline-geomap/blob/main/README_zh.md)]
 
+## 📰 News
+- **[2024.09.29]** The mobile-responsive design has been initially adapted. Please try the demo. **. 
+
 ## 🎥 Demo List
 
-[daily science news(Not yet adapted for mobile devices.)](http://101.42.16.7/timemap)
+[daily science news](http://101.42.16.7/timemap)
 <figure class="half">
     <img src="https://github.com/user-attachments/assets/512488e0-6147-487a-86e1-4dc951503507">
     <img src="https://github.com/user-attachments/assets/0487707d-c6a4-4261-b052-09754ebd24bc">
