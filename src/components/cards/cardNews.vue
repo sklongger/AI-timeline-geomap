@@ -328,6 +328,7 @@ const turnPage = (type: 'pre' | 'next') => {
             }
 
             .content {
+                margin-top: 4px;
                 height: 100%;
                 text-align: left;
                 font-size: 14px;
