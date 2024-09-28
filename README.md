@@ -13,7 +13,7 @@ In our demo, we utilized modern AI technologies such as RAG to construct spatiot
 [[中文README](https://github.com/sklongger/AI-timeline-geomap/blob/main/README_zh.md)]
 
 ## 📰 News
-- **[2024.09.29]** The mobile-responsive design has been initially adapted. Please try the demo. **. 
+- **[2024.09.29]** The mobile-responsive design has been initially adapted. Please try the demo. Looking forward to your suggestions for improving the design of mobile styles!
 
 ## 🎥 Demo List
 
