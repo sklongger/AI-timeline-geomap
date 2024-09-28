@@ -33,7 +33,7 @@
                         <a class="from" :href="cardInfo.titleUrl" target="_blank" v-if="cardInfo.website">(转自{{
                             cardInfo.website }})</a>
                     </div>
-                    <div class="meta">
+                    <div class="meta" v-if="!isMobile">
                         {{ cardInfo.organization }}
                     </div>
                     <div class="content">
