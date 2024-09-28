@@ -2,27 +2,27 @@
     <div id="timeline_container">
         <div class="container_background">
             <div id="toolbox">
-                <!-- <HomeTwoTone :style="{ fontSize: '20px' }" @click="toolClick('home')" /> -->
-                <GithubOutlined :style="{ fontSize: '20px', color: 'rgb(24, 144, 255)' }"
+                <GithubOutlined :style="{ fontSize: '18px', color: 'rgb(24, 144, 255)' }"
                     @click="toolClick('github')" />
-                <PlayCircleTwoTone :style="{ fontSize: '20px' }" @click="toolClick('play')" v-if="!playing" />
-                <PauseCircleTwoTone :style="{ fontSize: '20px' }" @click="toolClick('stop')" v-if="playing" />
-                <PlusCircleTwoTone :style="{ fontSize: '20px' }" @click="toolClick('magnify')" />
-                <MinusCircleTwoTone :style="{ fontSize: '20px' }" @click="toolClick('reduce')" />
+                <HomeTwoTone :style="{ fontSize: '18px' }" @click="toolClick('home')" />
+                <PlayCircleTwoTone :style="{ fontSize: '18px' }" @click="toolClick('play')" v-if="!playing" />
+                <PauseCircleTwoTone :style="{ fontSize: '18px' }" @click="toolClick('stop')" v-if="playing" />
+                <PlusCircleTwoTone :style="{ fontSize: '18px' }" @click="toolClick('magnify')" v-if="!isMobile"/>
+                <MinusCircleTwoTone :style="{ fontSize: '18px' }" @click="toolClick('reduce')" v-if="!isMobile"/>
             </div>
             <div class="baseline_v" :style="{ left: `${timeline['baseLineOffset'] * 100}%` }"></div>
             <div class="baseline_h"></div>
             <div class="dragable_container" :style="{ left: timeline.offset + 'px' }"
                 v-TimelineDrag="{ timeline: timeline, refreshFlag: refreshFlag }">
-                <div class="flagwraper">
-                    <div v-for="(flag, index) in flags" :key="index"
+                <div class="flagwraper" v-show="timelineData.init">
+                    <div v-for="(flag, index) in timelineData.flags" :key="index"
                         v-TimelineFlag="{ flag: flag, timeline: timeline, refreshFlag: refreshFlag, index: index }"
                         class="timeflag" @click="clickFlag(index)">
                         <MarkerShadow :title="flag['locationName']" :subtitle="flag['organization']"
                             :isActive="index == timeline.activeFlag" />
                     </div>
 
-                    <div v-for="(rulermarker, i) in timeline.rulerMarkers" :key="i" class="rulermarker"
+                    <div v-for="(rulermarker, i) in timelineData.rulerMarkers" :key="i" class="rulermarker"
                         :style="{ left: rulermarker.position + 'px' }"
                         :class="{ 'year_type': rulermarker.timeType == 'year' }">
                         {{ rulermarker.content }}
@@ -40,35 +40,37 @@
 
 <script setup lang='ts'>
 import { getTimeline } from '@/api/timeline.ts';
-import { ref, reactive, onMounted, onBeforeMount } from 'vue';
-// import timelineConfig from '@/api/timeline.config.ts';
+import { ref, onBeforeMount } from 'vue';
 import timelineConfig from '@/api/timeline.config_tpl.ts';
-import { renderTimeline, TimelineData } from '@/components/timeline/renderTimeline.ts';
+import { renderTimeline, TimelineData, TimelineStyle } from '@/components/timeline/renderTimeline.ts';
+import { timelineStyleConfig, isMobile } from '@/../config/styleConfig.ts';
 import { PlusCircleTwoTone, MinusCircleTwoTone, HomeTwoTone, PlayCircleTwoTone, PauseCircleTwoTone, GithubOutlined } from '@ant-design/icons-vue';
 import { useStore } from 'vuex';
-import { useRoute, useRouter } from 'vue-router';
 import { recordVideo, stopRecordVideo } from '@/utils/record.ts';
-// import Marker from './markers/markerSimple.vue';
 import MarkerShadow from '@/components/timeline/markers/markerShadow.vue';
 const ANIMATEDURATION = 2700 + 2000 + 550
-const router = useRouter()
 
-let timelineData: TimelineData = structuredClone(timelineConfig);
-let flags = timelineData["flags"];
-let timeline = timelineData["timeline"];
+let timelineData = structuredClone(timelineConfig);
+timelineData.flags = []
+const rt = new renderTimeline(timelineData)
+let timeline: TimelineStyle = timelineStyleConfig;
+let playing = ref(false);
 const refreshFlag = ref(true)
 const store = useStore();
-const rt = new renderTimeline()
-let playing = ref(false);
+const playControl = {
+    startDelay: 500,
+    record: false,
+    duration: 2000,
+}
 
-onMounted(async () => {
+onBeforeMount(async () => {
     await getTimelineData('2023-05-16')
     await updateTimelineData()
     // toolClick('play')
 })
 
 const renderFlags = () => {
-    rt.render(timelineData);
+    rt.render();
     refreshFlag.value = !refreshFlag.value
     setTimeout(() => {
         clickFlag(0)
@@ -78,7 +80,7 @@ const renderFlags = () => {
 const clickFlag = (index) => {
     goToFlag(index);
     refreshFlag.value = !refreshFlag.value
-    const flag = flags[index]
+    const flag = timelineData.flags[index]
     store.commit('content/updateContent', {
         content: flag,
         location: flag['location'],
@@ -88,34 +90,30 @@ const clickFlag = (index) => {
 
 const goToFlag = (index) => {
     timeline.activeFlag = index;
-    rt.positionFlags(timelineData);
+    rt.positionFlags();
     timeline.init = true;
 };
 
 const toolClick = async (type) => {
-    const factor = 1.5
-    if (type === 'magnify') {
-        timelineData.timeline.ruler *= factor;
-        timelineData.timeline.rulerNum *= factor
-    } else if (type === 'reduce') {
-        timelineData.timeline.ruler /= factor;
-        timelineData.timeline.rulerNum /= factor
+    if (type === 'magnify' || type === 'reduce') {
+        rt.zoom(type)
     } else if (type === 'home') {
-        router.replace({
-            name: 'news'
-        })
+        // router.replace({
+        //     name: 'news'
+        // })
+        goToFlag(0)
     } else if (type == 'play') {
         playing.value = true
-        if (timeline.control.record) {
+        if (playControl.record) {
             await recordVideo();
         }
 
         setTimeout(() => {
             play(0);
-        }, timeline.control.startDelay)
+        }, playControl.startDelay)
 
     } else if (type == 'stop') {
-        if (timeline.control.record) {
+        if (playControl.record) {
             await stopRecordVideo();
         }
 
@@ -128,7 +126,7 @@ const toolClick = async (type) => {
 
 const orderFlags = () => {
     let playOrder = []
-    flags.forEach((element, index) => {
+    timelineData.flags.forEach((element, index) => {
         playOrder.push({
             order: element['order'],
             index: index
@@ -143,20 +141,20 @@ const play = (index) => {
     const flagIndex = playOrder[index]['index']
     let duration;
 
-    if (timeline.control.record) {
-        duration = flags[flagIndex]['duration'] * 1000 + ANIMATEDURATION
+    if (playControl.record) {
+        duration = timelineData.flags[flagIndex]['duration'] * 1000 + ANIMATEDURATION
     } else {
-        duration = timeline.control.duration + ANIMATEDURATION
+        duration = playControl.duration + ANIMATEDURATION
     }
     clickFlag(flagIndex);
     setTimeout(() => {
-        if (timeline.control.record) {
+        if (playControl.record) {
             index += 1
         } else {
-            index = (index + 1) % flags.length
+            index = (index + 1) % timelineData.flags.length
         }
 
-        if (index != flags.length && playing.value) {
+        if (index != timelineData.flags.length && playing.value) {
             play(index)
         } else {
             toolClick('stop')
@@ -178,14 +176,11 @@ async function preloadImages(urlList) {
 }
 
 async function getTimelineData(date: string) {
-    timelineData = structuredClone(timelineConfig);
-    flags = timelineData["flags"];
-    timeline = timelineData["timeline"];
     const data = await getTimeline()
-    const tpl = flags.pop()
+    const tpl = structuredClone(timelineConfig).flags[0];
     let preloadList = []
     data.forEach(element => {
-        tpl['time'] = element['date']
+        tpl['timeStr'] = element['date']
         tpl['title'] = element['title']
         tpl['subtitle'] = element['subtitle']
         tpl['content'] = element['summary']
@@ -195,12 +190,16 @@ async function getTimelineData(date: string) {
         tpl['organization'] = element['organization']
         tpl['website'] = element['website']
         tpl['titleUrl'] = element['title_url']
-        flags.push(JSON.parse(JSON.stringify(tpl)))
+        timelineData.flags.push(JSON.parse(JSON.stringify(tpl)))
         preloadList = [...preloadList, ...element['imgs']]
     });
     refreshFlag.value = !refreshFlag.value
     renderFlags()
+    setTimeout(() => {
+        timelineData.init = true
+    }, 0);
     await preloadImages(preloadList)
+    
 }
 async function updateTimelineData() {
     store.subscribe(async (mutation, state) => {
@@ -232,7 +231,7 @@ async function updateTimelineData() {
         linear-gradient(to bottom, #ddd 1px, transparent 1px);
 
     width: 100%;
-    height: 220px;
+    height: var(--timeline-container-height--);
     overflow: hidden;
 
     .container_background {
@@ -252,23 +251,23 @@ async function updateTimelineData() {
             font-size: 12px;
             height: 76%;
             width: 30px;
-            background: rgba(253, 254, 240, 0.8);
-            z-index: 100;
+            background: rgba(253, 254, 240, 1);
             display: flex;
             flex-direction: column;
             /* 设置子元素纵向排列 */
-            justify-content: space-between;
-            padding: 20px 0;
+            justify-content: space-around;
+            padding: 10px 0;
             box-shadow: 6px 6px 2px #ccc;
+            z-index: 999;
         }
 
         .baseline_v {
             position: absolute;
-            height: 196px;
+            height: calc(100% - 24px);
             width: 1.5px;
             left: 10%;
             background: rgb(0, 0, 0, 0.8);
-            z-index: 100;
+            z-index: 0;
         }
 
         .baseline_h {
@@ -280,13 +279,13 @@ async function updateTimelineData() {
             background: rgba(225, 225, 225, 1);
             /* background: linear-gradient(to right top, rgba(51, 172, 170, 0.8), rgba(50, 147, 230, 0.2), rgba(158, 35, 234, 0.5)); */
 
-            z-index: 100;
+            z-index: 2;
         }
 
         .dragable_container {
             cursor: move;
             position: absolute;
-            height: 215px;
+            height: calc(100% - 5px);
             width: 130%;
             transition: left 0.5s ease;
 
@@ -295,7 +294,7 @@ async function updateTimelineData() {
                     position: absolute;
                     right: 0px;
                     top: 50%;
-                    transform: translate(-130%, -50%);
+                    transform: translate(50%, -50%);
                     content: '';
                     height: 160px;
                     width: 160px;
@@ -313,7 +312,7 @@ async function updateTimelineData() {
                 font-size: 8px;
                 position: absolute;
                 bottom: 0px;
-                z-index: 100;
+                z-index: 2;
                 height: 14px;
                 line-height: 12px;
                 color: rgba(255, 255, 255, 1);
@@ -357,8 +356,7 @@ async function updateTimelineData() {
             }
 
             .flagwraper {
-                height: 200px;
-
+                height: calc(100% - 20px);
                 .timeflag {
                     cursor: pointer;
                     position: absolute;

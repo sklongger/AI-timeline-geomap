@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
 
+// 时间轴交互
 const content = {
     namespaced: true,
     state: {
@@ -7,7 +8,8 @@ const content = {
         locationName: '',
         preLocation: [116, 40],
         location: [116, 40],
-        content: ''
+        content: '',
+        cardShow: false,
     },
     mutations: {
         updateContent(state, data) {
@@ -17,10 +19,19 @@ const content = {
             state.location = location;
             state.preLocationName = state.locationName
             state.locationName = locationName
+        },
+        updateCardShowState(state, data) {
+            state.cardShow = data;
+        }
+    },
+    actions: {
+        updateCardShowState({ commit }, data: boolean) {
+            commit('updateCardShowState', data);
         }
     }
 };
 
+// 时间轴后端数据请求
 const timeline = {
     namespaced: true,
     state: {

@@ -1,33 +1,17 @@
 
-const ONEDAYMILLSECONDS = 24 * 60 * 60 * 1000
+import { timelineStyleConfig } from '@/../config/styleConfig.ts';
+const ONEDAYMILLSECONDS = 24 * 60 * 60 * 1000;
 export interface TimelineData {
-    timeline: {
-        containerId: string;
-        containerWidth: number;
-        containerHeight: number;
-        activeFlag: number;
-        offset: number;
-        flagWidth: number;
-        init: boolean;
-        baseLineOffset: number;
-        flagOffsetWidth: number;
-        ruler?: number;
-        rulerNum: number;
-        rulerMarkerWidth: number;
-        rulerMarkers: {
-            content: null | String;
-            timeType: null | String;
-            time: null | string;
-            position: null | number;
-        }[];
-        control: {
-            startDelay: number,
-            record: boolean,
-            duration: number,
-        },
-    };
+    init: boolean;
+    rulerMarkers: {
+        content?: null | String;
+        timeType?: null | String;
+        time?: Date;
+        position?: null | number;
+    }[];
     flags: {
-        time: string;
+        timeStr: string;
+        time?: Date;
         duration: number;
         location: number[];
         locationName: null | string;
@@ -38,79 +22,107 @@ export interface TimelineData {
         imgs: string[];
         website: string;
         titleUrl: string;
-        row: number | "middle" | null;
+        row: string | null;
         order: number;
+        position?: number | null;
+        layer?: number;
     }[];
 }
+export interface TimelineStyle {
+    containerId: string;
+    containerWidth: number;
+    containerHeight: number;
+    activeFlag: number;
+    offset: number;
+    flagWidth: number;
+    flagMargin: number;
+    init: boolean;
+    baseLineOffset: number;
+    flagOffsetWidth: number;
+    ruler?: number;
+    rulerNum: number;
+    rulerMarkerWidth: number;
+}
 export class renderTimeline {
-    private entity;
-    private ruler;
+
     private flagLayer = {
         "top": null,
         "middle": null,
         "bottom": null
     }
     private dateMap = {}
+    private timeline = timelineStyleConfig
+    private timelineData: TimelineData;
 
-    public render(timelineData: TimelineData) {
-        let timeline = timelineData["timeline"];
-        this.time2Date(timelineData);
-        const container = document.getElementById(`${timeline['containerId']}`)
-        timeline["containerWidth"] = container.offsetWidth;
-        timeline["containerHeight"] = timeline['containerHeight'];
-        timeline["offset"] = 0;
-        timeline["offsetOld"] = 0;
-
-        timeline["flagHeight"] = timeline["containerHeight"] * 0.95 * 0.65 / 3;
-        timeline["flagMargin"] = timeline["containerHeight"] * 0.9 * 0.35 / 4;
-
-        this.flagLayer["middle"] = timeline["flagMargin"] * 2 + timeline["flagHeight"];
-        this.flagLayer["top"] = timeline["flagMargin"];
-        this.flagLayer["bottom"] = timeline["flagMargin"] * 3 + timeline["flagHeight"] * 2;
-        this.renderFlags(timelineData);
+    constructor(timelineData) {
+        this.timelineData = timelineData;
     }
 
-    public renderFlags(timelineData: TimelineData) {
-        let timeline = timelineData["timeline"];
-        let flags = timelineData["flags"];
-        if (!timeline["ruler"]) {
-            this.ruler = this.calRuler(flags, timeline["containerWidth"] * (1 - timeline['baseLineOffset']) - timeline["flagWidth"] * timeline["flagOffsetWidth"]);
-            timeline["ruler"] = this.ruler;
-        } else {
-            this.ruler = timeline["ruler"];
+    public render(): void {
+        const container: HTMLElement = document.getElementById(`${this.timeline.containerId}`)
+        this.time2Date();
+        this.timeline.containerWidth = container.offsetWidth;
+        this.timeline.offset = 0;
+        
+        if (this.timeline.flagHeight == null) {
+            this.timeline.flagHeight = this.timeline.containerHeight * 0.95 * 0.65 / 3;
         }
 
-        this.setRows(flags, timeline);
-        this.renderRulerMarkers(timelineData);
+        if (this.timeline.flagMargin == null) {
+            this.timeline.flagMargin = this.timeline.containerHeight * 0.9 * 0.35 / 4;
+        }
+
+        this.flagLayer["middle"] = this.timeline.flagMargin * 2 + this.timeline.flagHeight;
+        this.flagLayer["top"] = this.timeline.flagMargin;
+        this.flagLayer["bottom"] = this.timeline.flagMargin * 3 + this.timeline.flagHeight * 2;
+        this.renderFlags();
     }
 
-    public positionFlags(timelineData) {
-        let timeline = timelineData["timeline"];
-        let flags = timelineData["flags"];
-        let offset = flags[0]["position"] - flags[timeline["activeFlag"]]["position"];
-        timeline['offsetOld'] = timeline['offset'];
-        timeline["offset"] = offset;
-        this.renderRulerMarkers(timelineData);
+    public renderFlags(): void {
+        let flags = this.timelineData.flags;
+        if (!this.timeline.ruler) {
+            this.timeline.ruler = this.calRuler(this.timeline.containerWidth * (1 - this.timeline.baseLineOffset) - this.timeline.flagWidth * this.timeline.flagOffsetWidth);
+        }
+        this.setRows();
+        this.renderRulerMarkers();
     }
 
-    private time2Date(timelineData) {
-        const flags = timelineData['flags']
+    public positionFlags(): void {
+        let flags = this.timelineData.flags;
+        let offset = flags[0].position - flags[this.timeline.activeFlag].position;
+        // this.timeline.offsetOld = this.timeline.offset;
+        this.timeline.offset = offset;
+        this.renderRulerMarkers();
+    }
+
+    public zoom(type: string): void {
+        const factor = 1.5
+        if (type === 'magnify') {
+            this.timeline.ruler *= factor;
+            this.timeline.rulerNum *= factor
+        } else if (type === 'reduce') {
+            this.timeline.ruler /= factor;
+            this.timeline.rulerNum /= factor
+        }
+    }
+
+    private time2Date() {
+        const flags = this.timelineData.flags
         flags.forEach((item) => {
-            item['time'] = new Date(item['time'])
+            item.time = new Date(item.timeStr)
         })
     }
 
-    private renderRulerMarkers(timelineData) {
-        var timeline = timelineData["timeline"];
-        var flags = timelineData["flags"];
-        this.sortFlags(flags);
-        this.genRulerMarkerTime(timeline, flags);
+    private renderRulerMarkers() {
+        this.sortFlags();
+        this.genRulerMarkerTime();
     }
 
-    private genRulerMarkerTime(timeline, flags) {
+    private genRulerMarkerTime() {
+        const flags = this.timelineData.flags;
         this.dateMap = {}
         //days是半个可视时间轴的长度对应的天数，timeLevel是ruler级别，baseDay是drag块0点对应的时间相距公元1年的天数。
-        var days = this.calInterval(flags[0]["time"], flags[flags.length - 1]["time"]);
+        var days = this.calInterval(flags[0].time, flags[flags.length - 1].time);
 
         var timeLevel = null;
         if (days >= 365 * 100) {
@@ -130,27 +142,21 @@ export class renderTimeline {
         }
 
         //前端显示的第一个时间刻度距离公元1年1月1日有多少天
-        const baseDay = this.calBaseDay(timeline, flags);
-        const daysInterval = days / ((timeline["rulerNum"] - 1) / 2);
+        const baseDay = this.calBaseDay();
+        const daysInterval = days / ((this.timeline.rulerNum - 1) / 2);
         const radius = daysInterval / 2;
-        var rulerMarkers = timeline["rulerMarkers"];
-        for (let i = 0; i < timeline["rulerNum"]; i++) {
-            let _rulerMarker = {
-                "time": null,
-                "position": null,
-                "content": null
-            };
-
-            rulerMarkers[i] = _rulerMarker;
-            rulerMarkers[i]["time"] = new Date();
-            rulerMarkers[i]["time"].setTime(baseDay.getTime() + i * daysInterval * ONEDAYMILLSECONDS);
-            if (Math.abs(this.calInterval(rulerMarkers[i]["time"], flags[timeline["activeFlag"]]["time"])) <= radius) {
-                rulerMarkers[i]["time"].setTime(flags[timeline["activeFlag"]]["time"].getTime());
+        var rulerMarkers = this.timelineData.rulerMarkers;
+        for (let i = 0; i < this.timeline.rulerNum; i++) {
+            rulerMarkers[i] = {};
+            rulerMarkers[i].time = new Date();
+            rulerMarkers[i].time.setTime(baseDay.getTime() + i * daysInterval * ONEDAYMILLSECONDS);
+            if (Math.abs(this.calInterval(rulerMarkers[i].time, flags[this.timeline.activeFlag].time)) <= radius) {
+                rulerMarkers[i].time.setTime(flags[this.timeline.activeFlag].time.getTime());
             }
-            rulerMarkers[i]["position"] = this.time2Position(rulerMarkers[i]["time"], flags, timeline) - timeline['rulerMarkerWidth'] * 0.5;//rulerMarkers[i]["time"] * timeline["ruler"];
-            const { content, timeType } = this.time2Display(rulerMarkers[i]["time"]);
-            rulerMarkers[i]["content"] = content;
-            rulerMarkers[i]["timeType"] = timeType
+            rulerMarkers[i].position = this.time2Position(rulerMarkers[i].time) - this.timeline.rulerMarkerWidth * 0.5;
+            const { content, timeType } = this.time2Display(rulerMarkers[i].time);
+            rulerMarkers[i].content = content;
+            rulerMarkers[i].timeType = timeType
         }
     }
 
@@ -175,59 +181,55 @@ export class renderTimeline {
         return { content, timeType };
     }
 
-    private calBaseDay(timeline, flags) {
+    private calBaseDay() {
         //计算第一个日期和最后一个日期的天数差
-        const days = this.calInterval(flags[0]["time"], flags[flags.length - 1]["time"]);
+        const flags = this.timelineData.flags;
+        const days = this.calInterval(flags[0].time, flags[flags.length - 1].time);
         //计算时间轴显示的第一个日期（要比第一个赋值日期更早）比赋值最后一个日期早的天数
         const baseDay = new Date();
-        baseDay.setTime(flags[0]['time'].getTime() - days * ONEDAYMILLSECONDS);
+        baseDay.setTime(flags[0].time.getTime() - days * ONEDAYMILLSECONDS);
         return baseDay;
     }
 
-    private time2Position(time, flags, timeline) {
-        const baseTime = flags[0]["time"];
+    private time2Position(time: Date): number {
+        const baseTime = this.timelineData.flags[0].time;
         const days = (time.getTime() - baseTime.getTime()) / ONEDAYMILLSECONDS;
-        const position = timeline["containerWidth"] * (timeline['baseLineOffset']) + days * this.ruler;
+        const position: number = this.timeline.containerWidth * (this.timeline.baseLineOffset) + days * this.timeline.ruler;
         return position;
     }
 
-    private setRows(flags, timeline) {
-
-        var baseTime = flags[0]["time"];
-        flags.forEach((flag, index, flags) => {
-            // flag["position"] = timeline["containerWidth"] * 1.5 + this.calInterval(baseTime, flag["time"]) * this.ruler;
-
-            flag["position"] = this.time2Position(flag["time"], flags, timeline);
-            if (index > 0 && this.calInterval(flags[index - 1]["time"], flag["time"]) * this.ruler < timeline["flagWidth"]) {
-                if (index > 1 && this.calInterval(flags[index - 2]["time"], flag["time"]) * this.ruler < timeline["flagWidth"]) {
-                    flag["row"] = this.restRow(flags[index - 1]["row"], flags[index - 2]["row"]);
+    private setRows(): void {
+        this.timelineData.flags.forEach((flag, index, flags) => {
+            flag.position = this.time2Position(flag.time);
+            if (index > 0 && this.calInterval(flags[index - 1].time, flag.time) * this.timeline.ruler < this.timeline.flagWidth) {
+                if (index > 1 && this.calInterval(flags[index - 2]["time"], flag["time"]) * this.timeline.ruler < this.timeline.flagWidth) {
+                    flag.row = this.restRow(flags[index - 1].row, flags[index - 2].row);
                 } else {
-                    flag["row"] = this.nextRow(flags[index - 1]["row"]);
+                    flag.row = this.nextRow(flags[index - 1].row);
                 }
             } else {
-                flag["row"] = "middle";
+                flag.row = "middle";
             }
-            flag["layer"] = this.flagLayer[flag["row"]];
+            flag.layer = this.flagLayer[flag.row];
         });
     }
 
-    private restRow(row1, row2) {
+    private restRow(row1, row2): string {
         var rows = ["middle", "top", "bottom"];
         let index = 3 - rows.indexOf(row1) - rows.indexOf(row2);
         return rows[index];
     }
 
-    private nextRow(row) {
+    private nextRow(row): string {
         var rows = ["middle", "top", "bottom"];
         let index = (rows.indexOf(row) + 1) % 3;
         return rows[index];
     }
 
-    private sortFlags(flags) {
-        flags.sort((flag1, flag2) => {
+    private sortFlags(): void {
+        this.timelineData.flags.sort((flag1, flag2) => {
             return this.calTime(flag1["time"]) - this.calTime(flag2["time"]);
         });
-        return flags;
     }
 
     /*interval单位是天*/
@@ -251,8 +253,9 @@ export class renderTimeline {
     }
 
     /*  一天对应的长度（day=>left） */
-    private calRuler(flags, timeWidth) {
-        this.sortFlags(flags);
+    private calRuler(timeWidth) {
+        const flags = this.timelineData.flags;
+        this.sortFlags();
         let ruler = timeWidth / (this.calInterval(flags[0]["time"], flags[flags.length - 1]["time"]));
         return ruler;
     }
