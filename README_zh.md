@@ -12,6 +12,8 @@
 
 [[English README](https://github.com/sklongger/AI-timeline-geomap/blob/main/README.md)]
 
+- **[2024.09.29]** 初步适配移动端，欢迎尝试demo，期待对移动端的改进建议 **. 
+
 ## 🎥 Demo List
 
 [每日科技趣闻(尚未对移动端适配)](http://101.42.16.7/timemap)
