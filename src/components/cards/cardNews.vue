@@ -180,17 +180,17 @@ const turnPage = (type: 'pre' | 'next') => {
         background: #e5e5e5;
         width: var(--card-width--);
         @media screen and (min-width: 600px) {
-            padding-right: var(--card-padding-right--);    
+            padding-right: var(--card-padding-right--);
         }
-        
+
         height: 100%;
         overflow-y: auto;
-        
+        border-bottom: 16px solid transparent; 
 
         .img-container {
-            padding: 4px;
+            padding: 0px;
             height: calc(0.45*(100vh - var(--timeline-container-height--) - 80px));
-            width: 95%;
+            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -199,8 +199,7 @@ const turnPage = (type: 'pre' | 'next') => {
                 width: 100%;
                 height: 100%;
                 box-sizing: border-box;
-                margin-right: 6px;
-
+                margin-right: 4px;
                 &:last-child {
                     margin-right: 0;
                 }
@@ -303,7 +302,6 @@ const turnPage = (type: 'pre' | 'next') => {
             height: calc(0.55*(100vh - var(--timeline-container-height--) - 80px));
             display: flex;
             flex-direction: column;
-            
 
             .title {
                 text-align: left;
@@ -322,13 +320,13 @@ const turnPage = (type: 'pre' | 'next') => {
                 width: 100%;
                 font-size: 12px;
                 line-height: 20px;
-                height: 20px;
                 color: #999;
                 text-align: left;
             }
 
             .content {
-                height: 100%;
+                margin-top: 8px;
+                /* height: 100%; */
                 text-align: left;
                 font-size: 14px;
                 color: #333;
