@@ -37,7 +37,8 @@ const earthStyleConfig = {
 const cardStyleConfig = {
     'maxWidth': '1000px',
     'cardPaddingRight': '160px',
-    'cardTitleSize': '30px'
+    'cardTitleSize': '30px',
+    'cardParagraphMargin': '30px'
 }
 
 const isMobile = window.matchMedia(`(max-width: ${mobileMaxWidth}px)`).matches;
@@ -59,7 +60,8 @@ if (isMobile) {
 
     Object.assign(cardStyleConfig, {
         maxWidth: '90%',
-        cardTitleSize: '16px'
+        cardTitleSize: '16px',
+        cardParagraphMargin: '10px'
     })
 }
 
@@ -73,6 +75,7 @@ function configStyle(): void {
     root.style.setProperty('--card-width--', `${cardStyleConfig.maxWidth}`);
     root.style.setProperty('--card-padding-right--', `${cardStyleConfig.cardPaddingRight}`);
     root.style.setProperty('--card-title-size--', `${cardStyleConfig.cardTitleSize}`);
+    root.style.setProperty('--card-paragraph-margin--', `${cardStyleConfig.cardParagraphMargin}`);
 
     root.style.setProperty('--screen-height--', window.innerHeight + 'px');
 }

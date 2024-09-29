@@ -60,7 +60,7 @@ const store = useStore();
 const playControl = {
     startDelay: 500,
     record: false,
-    duration: 2000,
+    duration: 3000,
 }
 
 onBeforeMount(async () => {
@@ -142,7 +142,8 @@ const play = (index) => {
     let duration;
 
     if (playControl.record) {
-        duration = timelineData.flags[flagIndex]['duration'] * 1000 + ANIMATEDURATION
+        // duration = timelineData.flags[flagIndex]['duration'] * 1000 + ANIMATEDURATION
+        duration = playControl.duration + ANIMATEDURATION
     } else {
         duration = playControl.duration + ANIMATEDURATION
     }

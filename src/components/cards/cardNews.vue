@@ -326,14 +326,16 @@ const turnPage = (type: 'pre' | 'next') => {
 
             .content {
                 margin-top: 8px;
-                /* height: 100%; */
                 text-align: left;
                 font-size: 14px;
                 color: #333;
                 line-height: 1.4;
                 display: flex;
                 flex-direction: column;
-                justify-content: space-around;
+                justify-content: flex-start;
+                & > div {
+                    margin-bottom: var(--card-paragraph-margin--)
+                }
             }
         }
     }
