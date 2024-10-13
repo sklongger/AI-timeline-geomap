@@ -11,7 +11,7 @@ const timelineStyleConfig = {
     "flagHeight": 48,
     "init": false,
     "ruler": null,
-    "rulerNum": 15,//在时间轴上显示的刻度数量
+    "rulerNum": 12,//在时间轴上显示的刻度数量
     "baseLineOffset": 0.5,
     "flagOffsetWidth": 1,//最后一个flag显示多少的宽度
     "rulerMarkerWidth": 70,

@@ -1,5 +1,5 @@
 const config = {
     // baseUrl: 'http://localhost:8012',
-    baseUrl: 'http://101.42.16.7',
+    baseUrl: 'https://autumnriver.tech',
 }
 export default { ...config }
