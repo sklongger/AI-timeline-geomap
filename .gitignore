@@ -22,5 +22,6 @@ temp_img
 *.njsproj
 *.sln
 *.sw?
+nginx.conf
 
 depoly2github.sh

@@ -63,7 +63,7 @@ export class renderTimeline {
         this.time2Date();
         this.timeline.containerWidth = container.offsetWidth;
         this.timeline.offset = 0;
-        
+
         if (this.timeline.flagHeight == null) {
             this.timeline.flagHeight = this.timeline.containerHeight * 0.95 * 0.65 / 3;
         }
@@ -160,7 +160,7 @@ export class renderTimeline {
         }
     }
 
-    private time2Display(dateObj) {
+    private time2Display(dateObj: Date = null, mode: String = 'year') {
         let year = dateObj.getFullYear();
         let month = dateObj.getMonth() + 1;
         let day = dateObj.getDate();
@@ -172,7 +172,22 @@ export class renderTimeline {
         }
         if (!this.dateMap[year]) {
             this.dateMap[year] = true
-            content += `${year}年${month}月${day}日`;
+            switch (mode) {
+                case 'full':
+                    content += `${year}年${month}月${day}日`;
+                    break;
+                case 'year':
+                    content += `${year}年`;
+                    break;
+                case 'month':
+                    content += `${year}年${month}月`;
+                    break;
+                case 'day':
+                    content += `${month}月${day}日`;
+                    break;
+                default:
+                    break;
+            }
             timeType = 'year'
         } else {
             content += `${month}月${day}日`;
