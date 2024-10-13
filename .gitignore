@@ -23,5 +23,6 @@ temp_img
 *.sln
 *.sw?
 nginx.conf
+stats.html
 
 depoly2github.sh
