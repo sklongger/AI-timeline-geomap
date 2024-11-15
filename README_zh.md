@@ -12,9 +12,16 @@
 
 [[English README](https://github.com/sklongger/AI-timeline-geomap/blob/main/README.md)]
 
+- **[2024.11.15]** 发布了可编辑的历史人物-时空地图，你可以借助AI能力（我们搭建了coze智能体），创建感兴趣的人物的时空地图，欢迎体验，欢迎加入历史人物时空地图的讨论群！
 - **[2024.09.29]** 初步适配移动端，欢迎尝试demo，期待您对移动端样式设计的改进建议！
 
 ## 🎥 Demo List
+[历史人物时空地图](https://autumnriver.tech/timemap?appName=historygeomap&person=demo). 更详细的使用、体验方法，请参考[此文档](https://gvy72b8f8g2.feishu.cn/base/Cajlby8PlakNnxsg3Vwcbb5nnOe?table=ldxas3H4wYfgjLo7).
+<figure class="half">
+    <div style="display:flex">
+        <div><img src="https://github.com/user-attachments/assets/bb494575-0062-4121-b236-54cb8fd3b6a5" width="100%" /></div>
+    </div>
+</figure>
 
 [每日科技趣闻](http://101.42.16.7/timemap)
 <figure class="half">

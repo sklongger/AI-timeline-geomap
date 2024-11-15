@@ -13,14 +13,24 @@ In our demo, we utilized modern AI technologies such as RAG to construct spatiot
 [[中文README](https://github.com/sklongger/AI-timeline-geomap/blob/main/README_zh.md)]
 
 ## 📰 News
+- **[2024.11.15]** An editable time-space map of historical figures has been released. You can use AI capabilities (we have set up the coze intelligent agent) to create time-space maps of characters you are interested in. We welcome you to try it out and join the discussion group for the time-space map of historical figures!
 - **[2024.09.29]** The mobile-responsive design has been initially adapted. Please try the demo. Looking forward to your suggestions for improving the design of mobile styles!
 
 ## 🎥 Demo List
 
-[daily science news](http://101.42.16.7/timemap)
+[Time-Space Map of Historical Figures](https://autumnriver.tech/timemap?appName=historygeomap&person=demo). For more detailed usage and experience methods, please refer to [this document](https://gvy72b8f8g2.feishu.cn/base/Cajlby8PlakNnxsg3Vwcbb5nnOe?table=ldxas3H4wYfgjLo7).
 <figure class="half">
-    <img src="https://github.com/user-attachments/assets/512488e0-6147-487a-86e1-4dc951503507">
-    <img src="https://github.com/user-attachments/assets/0487707d-c6a4-4261-b052-09754ebd24bc">
+    <div style="display:flex">
+        <div><img src="https://github.com/user-attachments/assets/bb494575-0062-4121-b236-54cb8fd3b6a5" width="100%" /></div>
+    </div>
+</figure>
+
+[Daily science news](https://autumnriver.tech/timemap?appName=technews)
+<figure class="half">
+    <div style="display:flex">
+        <div><img src="https://github.com/user-attachments/assets/512488e0-6147-487a-86e1-4dc951503507" width="100%" /></div>
+        <div><img src="https://github.com/user-attachments/assets/0487707d-c6a4-4261-b052-09754ebd24bc" width="100%" /></div>
+    </div>
 </figure>
 
 
