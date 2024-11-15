@@ -59,8 +59,6 @@ const styleConfig = computed(() => {
     return store.state.style
 })
 const timelineStyleConfig = styleConfig.value.timelineStyleConfig
-const isMobile = styleConfig.value.isMobile
-let asklikeLeft = -200
 
 let timelineData = structuredClone(timelineConfig)
 timelineData.flags = []
