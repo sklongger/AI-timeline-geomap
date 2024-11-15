@@ -7,7 +7,7 @@
                 <HomeTwoTone :style="{ fontSize: '18px' }" @click="toolClick('home')" />
                 <PlayCircleTwoTone :style="{ fontSize: '18px' }" @click="toolClick('play')" v-if="!playing" />
                 <PauseCircleTwoTone :style="{ fontSize: '18px' }" @click="toolClick('stop')" v-if="playing" />
-                <EditTwoTone :style="{ fontSize: '18px' }" @click="toolClick('edit')"/>
+                <EditTwoTone :style="{ fontSize: '18px' }" @click="toolClick('edit')" />
                 <!-- <PlusCircleTwoTone :style="{ fontSize: '18px' }" @click="toolClick('magnify')" v-if="!isMobile" />
                 <MinusCircleTwoTone :style="{ fontSize: '18px' }" @click="toolClick('reduce')" v-if="!isMobile" /> -->
             </div>
@@ -177,15 +177,15 @@ const play = (index) => {
 }
 
 async function preloadImages(urlList) {
-    urlList.forEach(async (url) => {
-        return new Promise((resolve, reject) => {
+    for (const url of urlList) {
+        console.log(url)
+        await new Promise((resolve, reject) => {
             const img = new Image();
             img.onload = () => resolve(img);
             img.onerror = () => reject(new Error(`Failed to load image: ${url}`));
             img.src = url;
         });
-    })
-
+    }
 }
 
 async function getTimelineData(data: Array<object>) {
@@ -214,7 +214,6 @@ async function getTimelineData(data: Array<object>) {
         timelineData.init = true
     }, 0);
     await preloadImages(preloadList)
-
 }
 async function updateTimelineData() {
     store.subscribe(async (mutation, state) => {
