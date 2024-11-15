@@ -3,7 +3,7 @@ import config from '@/../config/config.ts'
 
 const request = axios.create({
     baseURL: `${config.baseUrl}/autumnRiver`,
-    timeout: 30000
+    timeout: 300000
 })
 
 const errorHandler = error => {

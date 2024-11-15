@@ -13,10 +13,15 @@ import * as d3 from 'd3';
 import { onMounted, computed, render, h, reactive, ref } from 'vue';
 import { useStore } from 'vuex';
 import { EnvironmentTwoTone } from '@ant-design/icons-vue';
-import { earthStyleConfig } from '@/../config/styleConfig.ts';
-
 const store = useStore();
-const cardShow = computed(() => { return store.state.content.cardShow;})
+const cardShow = computed(() => {
+    return store.state.content.cardShow
+})
+
+const styleConfig = computed(() => {
+    return store.state.style
+})
+const earthStyleConfig = styleConfig.value.earthStyleConfig
 const OCEANCOLOR = earthStyleConfig['ocean-color']
 const LANDCOLOR = earthStyleConfig['land-color']
 const COUNTRYCOLOR = earthStyleConfig['country-color']
@@ -27,6 +32,7 @@ const Y_OFFSET = SIZE / 2
 let lat_offset = 0
 let lng_offset = 0
 let showDelay
+
 onMounted(() => {
     const projection = d3.geoOrthographic()
         .scale(SIZE / 2 - 0.5)
@@ -65,7 +71,6 @@ onMounted(() => {
             });
         })
 });
-
 const centerPosition = (svg, projection, path, state, animate = true) => {
     const locationName = state.locationName;
     const longitude = state.location[0];
@@ -191,6 +196,7 @@ const createMarker = (svg, projection, path, point, locationName = '') => {
     const icon = h(EnvironmentTwoTone, { spin: false, rotate: 0, style: { fontSize: '30px' } });
     render(icon, container);
 }
+
 </script>
 
 <style scoped>

@@ -5,7 +5,7 @@ const renderFlag = (el, binding) => {
         "left": flag.position + 'px',
         "height": timeline.flagHeight
     })
-    const zIndex = timeline.activeFlag == index ? 100 : 10 - index
+    const zIndex = timeline.activeFlag == index ? 100 : 50 - index
     Object.assign(marker.style, {
         "top": flag.layer + 'px',
         "width": timeline.flagWidth + 'px',

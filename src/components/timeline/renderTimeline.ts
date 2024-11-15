@@ -1,6 +1,9 @@
-
-import { timelineStyleConfig } from '@/../config/styleConfig.ts';
 const ONEDAYMILLSECONDS = 24 * 60 * 60 * 1000;
+
+export enum TimelineType {
+    TECHNEWS = 'technews',
+    HISTORYGEOMAP = 'historygeomap'
+}
 export interface TimelineData {
     init: boolean;
     rulerMarkers: {
@@ -34,6 +37,7 @@ export interface TimelineStyle {
     containerHeight: number;
     activeFlag: number;
     offset: number;
+    flagHeight: number;
     flagWidth: number;
     flagMargin: number;
     init: boolean;
@@ -51,14 +55,15 @@ export class renderTimeline {
         "bottom": null
     }
     private dateMap = {}
-    private timeline = timelineStyleConfig
+    private timeline: TimelineStyle;
     private timelineData: TimelineData;
 
-    constructor(timelineData) {
-        this.timelineData = timelineData;
+    constructor(timelineData: TimelineData, timelineStyle: TimelineStyle) {
+        this.timelineData = timelineData
+        this.timeline = timelineStyle
     }
 
-    public render(): void {
+    public render(resetRuler: boolean = false): void {
         const container: HTMLElement = document.getElementById(`${this.timeline.containerId}`)
         this.time2Date();
         this.timeline.containerWidth = container.offsetWidth;
@@ -75,12 +80,11 @@ export class renderTimeline {
         this.flagLayer["middle"] = this.timeline.flagMargin * 2 + this.timeline.flagHeight;
         this.flagLayer["top"] = this.timeline.flagMargin;
         this.flagLayer["bottom"] = this.timeline.flagMargin * 3 + this.timeline.flagHeight * 2;
-        this.renderFlags();
+        this.renderFlags(resetRuler);
     }
 
-    public renderFlags(): void {
-        let flags = this.timelineData.flags;
-        if (!this.timeline.ruler) {
+    public renderFlags(resetRuler: boolean = false): void {
+        if (!this.timeline.ruler || resetRuler) {
             this.timeline.ruler = this.calRuler(this.timeline.containerWidth * (1 - this.timeline.baseLineOffset) - this.timeline.flagWidth * this.timeline.flagOffsetWidth);
         }
         this.setRows();
@@ -109,7 +113,14 @@ export class renderTimeline {
     private time2Date() {
         const flags = this.timelineData.flags
         flags.forEach((item) => {
-            item.time = new Date(item.timeStr)
+            let timeStr = item.timeStr
+            if (timeStr.startsWith('-')) {
+                const timeArr = timeStr.slice(1).split('-')
+                timeArr[0] = timeArr[0].padStart(6, '0')
+                timeStr = `-${timeArr.join()}`
+            }
+
+            item.time = new Date(timeStr)
         })
     }
 
@@ -167,7 +178,7 @@ export class renderTimeline {
         let content = '';
         let timeType = ''
         if (year < 0) {
-            content = "BC";
+            content = "-";
             year = -year;
         }
         if (!this.dateMap[year]) {

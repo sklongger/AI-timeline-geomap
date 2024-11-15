@@ -16,7 +16,6 @@
 </template>
 
 <script setup>
-import { isMobile } from '@/../config/styleConfig.ts';
 const props = defineProps({
     title: {
         type: String,

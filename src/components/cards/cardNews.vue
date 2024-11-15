@@ -53,9 +53,14 @@ import { message, Card } from 'ant-design-vue';
 import { useStore } from 'vuex';
 import { ref, reactive, onMounted, onBeforeMount, watch, computed } from 'vue';
 import { LeftSquareFilled, RightSquareFilled } from '@ant-design/icons-vue';
-import { isMobile } from '@/../config/styleConfig.ts';
+import { TimelineType } from '@/components/timeline/renderTimeline.ts';
+import { getTimeline } from '@/api/timeline.ts';
 
 const store = useStore();
+const styleConfig = computed(() => {
+    return store.state.style
+})
+const isMobile = styleConfig.value.isMobile
 const cardShow = computed(() => {
     const cardShow = store.state.content.cardShow;
     if (cardShow) {
@@ -118,8 +123,20 @@ let date: Calender = reactive({
 });
 
 onMounted(async () => {
+    await getTimelineData()
     date = getDate()
 })
+async function getTimelineData() {
+    const body = {}
+    let timelineType: TimelineType
+    timelineType = TimelineType.TECHNEWS
+    const data = await getTimeline(timelineType, body)
+    store.commit('timeline/updateTimeline', {
+        msgType: TimelineType.HISTORYGEOMAP,
+        updateData: data
+    })
+}
+
 const suitable = ['宜亲近科技', '宜关注paper', '宜学习知识', '宜探查世界', '宜保持好奇', '宜开脑洞', '宜求索未知'];
 const getDate: () => Calender = () => {
     const today = new Date()
@@ -179,13 +196,14 @@ const turnPage = (type: 'pre' | 'next') => {
         border-radius: 10px;
         background: #e5e5e5;
         width: var(--card-width--);
+
         @media screen and (min-width: 600px) {
             padding-right: var(--card-padding-right--);
         }
 
         height: 100%;
         overflow-y: auto;
-        border-bottom: 16px solid transparent; 
+        border-bottom: 16px solid transparent;
 
         .img-container {
             padding: 0px;
@@ -200,6 +218,7 @@ const turnPage = (type: 'pre' | 'next') => {
                 height: 100%;
                 box-sizing: border-box;
                 margin-right: 4px;
+
                 &:last-child {
                     margin-right: 0;
                 }
@@ -333,7 +352,8 @@ const turnPage = (type: 'pre' | 'next') => {
                 display: flex;
                 flex-direction: column;
                 justify-content: flex-start;
-                & > div {
+
+                &>div {
                     margin-bottom: var(--card-paragraph-margin--)
                 }
             }

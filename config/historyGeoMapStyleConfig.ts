@@ -1,4 +1,4 @@
-const mobileMaxWidth = 600;
+const mobileMaxWidth = 600
 
 const timelineStyleConfig = {
     "containerId": "timeline_container",
@@ -35,20 +35,20 @@ const earthStyleConfig = {
 }
 
 const cardStyleConfig = {
-    'maxWidth': '1000px',
-    'cardPaddingRight': '160px',
-    'cardTitleSize': '30px',
-    'cardParagraphMargin': '30px'
+    'maxWidth': '500px',
+    'cardPaddingLeft': '40%',
+    'cardTitleSize': '16px',
+    'cardParagraphMargin': '30px',
+    'searchWidth': '40%'
 }
 
-const isMobile = window.matchMedia(`(max-width: ${mobileMaxWidth}px)`).matches;
+const isMobile = window.matchMedia(`(max-width: ${mobileMaxWidth}px)`).matches
 
 if (isMobile) {
     Object.assign(timelineStyleConfig, {
         containerWidth: 800,
         flagWidth: 106,
         flagHeight: 40,
-        flagOffsetWidth: 0.8,
         rulerNum: 6,
         baseLineOffset: 0.15,
         containerHeight: 180,
@@ -59,33 +59,36 @@ if (isMobile) {
     })
 
     Object.assign(cardStyleConfig, {
-        maxWidth: '90%',
+        maxWidth: '95vw',
         cardTitleSize: '16px',
-        cardParagraphMargin: '10px'
+        cardParagraphMargin: '10px',
+        cardPaddingLeft: 0,
+        searchWidth: '80%',
+        flagOffsetWidth: 0.5,//最后一个flag显示多少的宽度
     })
 }
 
 function configStyle(): void {
-    const root = document.documentElement;
-    root.style.setProperty('--marker-width--', `${timelineStyleConfig.flagWidth}px`);
-    root.style.setProperty('--marker-height--', `${timelineStyleConfig.flagHeight}px`);
-    root.style.setProperty('--timeline-container-height--', `${timelineStyleConfig.containerHeight}px`);
-    root.style.setProperty('--timeline-container-width--', `${timelineStyleConfig.containerWidth}px`);
+    const root = document.documentElement
+    root.style.setProperty('--marker-width--', `${timelineStyleConfig.flagWidth}px`)
+    root.style.setProperty('--marker-height--', `${timelineStyleConfig.flagHeight}px`)
+    root.style.setProperty('--timeline-container-height--', `${timelineStyleConfig.containerHeight}px`)
+    root.style.setProperty('--timeline-container-width--', `${timelineStyleConfig.containerWidth}px`)
 
-    root.style.setProperty('--card-width--', `${cardStyleConfig.maxWidth}`);
-    root.style.setProperty('--card-padding-right--', `${cardStyleConfig.cardPaddingRight}`);
-    root.style.setProperty('--card-title-size--', `${cardStyleConfig.cardTitleSize}`);
-    root.style.setProperty('--card-paragraph-margin--', `${cardStyleConfig.cardParagraphMargin}`);
+    root.style.setProperty('--card-width--', `${cardStyleConfig.maxWidth}`)
+    root.style.setProperty('--card-padding-left--', `${cardStyleConfig.cardPaddingLeft}`)
+    root.style.setProperty('--card-title-size--', `${cardStyleConfig.cardTitleSize}`)
+    root.style.setProperty('--card-paragraph-margin--', `${cardStyleConfig.cardParagraphMargin}`)
+    root.style.setProperty('--search-width--', `${cardStyleConfig.searchWidth}`)
 
-    root.style.setProperty('--screen-height--', window.innerHeight + 'px');
+    root.style.setProperty('--screen-height--', window.innerHeight + 'px')
 }
 
-configStyle.call(this);
-
+configStyle.call(this)
 
 export {
     timelineStyleConfig,
     earthStyleConfig,
     cardStyleConfig,
     isMobile
-};
+}

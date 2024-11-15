@@ -7,8 +7,9 @@
                 <HomeTwoTone :style="{ fontSize: '18px' }" @click="toolClick('home')" />
                 <PlayCircleTwoTone :style="{ fontSize: '18px' }" @click="toolClick('play')" v-if="!playing" />
                 <PauseCircleTwoTone :style="{ fontSize: '18px' }" @click="toolClick('stop')" v-if="playing" />
-                <PlusCircleTwoTone :style="{ fontSize: '18px' }" @click="toolClick('magnify')" v-if="!isMobile"/>
-                <MinusCircleTwoTone :style="{ fontSize: '18px' }" @click="toolClick('reduce')" v-if="!isMobile"/>
+                <EditTwoTone :style="{ fontSize: '18px' }" @click="toolClick('edit')"/>
+                <!-- <PlusCircleTwoTone :style="{ fontSize: '18px' }" @click="toolClick('magnify')" v-if="!isMobile" />
+                <MinusCircleTwoTone :style="{ fontSize: '18px' }" @click="toolClick('reduce')" v-if="!isMobile" /> -->
             </div>
             <div class="baseline_v" :style="{ left: `${timeline['baseLineOffset'] * 100}%` }"></div>
             <div class="baseline_h"></div>
@@ -40,37 +41,46 @@
 
 <script setup lang='ts'>
 import { getTimeline } from '@/api/timeline.ts';
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, computed } from 'vue';
 import timelineConfig from '@/api/timeline.config_tpl.ts';
-import { renderTimeline, TimelineData, TimelineStyle } from '@/components/timeline/renderTimeline.ts';
-import { timelineStyleConfig, isMobile } from '@/../config/styleConfig.ts';
-import { PlusCircleTwoTone, MinusCircleTwoTone, HomeTwoTone, PlayCircleTwoTone, PauseCircleTwoTone, GithubOutlined } from '@ant-design/icons-vue';
+import { renderTimeline, TimelineType, TimelineStyle } from '@/components/timeline/renderTimeline.ts';
+import { PlusCircleTwoTone, MinusCircleTwoTone, HomeTwoTone, PlayCircleTwoTone, PauseCircleTwoTone, GithubOutlined, EditTwoTone } from '@ant-design/icons-vue';
+import { message } from 'ant-design-vue';
 import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
 import { recordVideo, stopRecordVideo } from '@/utils/record.ts';
 import MarkerShadow from '@/components/timeline/markers/markerShadow.vue';
+const store = useStore()
+const route = useRoute()
 const ANIMATEDURATION = 2700 + 2000 + 550
 
-let timelineData = structuredClone(timelineConfig);
+const styleConfig = computed(() => {
+    return store.state.style
+})
+const timelineStyleConfig = styleConfig.value.timelineStyleConfig
+const isMobile = styleConfig.value.isMobile
+
+let timelineData = structuredClone(timelineConfig)
 timelineData.flags = []
-const rt = new renderTimeline(timelineData)
-let timeline: TimelineStyle = timelineStyleConfig;
-let playing = ref(false);
+const rt = new renderTimeline(timelineData, timelineStyleConfig)
+let timeline: TimelineStyle = timelineStyleConfig
+let playing = ref(false)
 const refreshFlag = ref(true)
-const store = useStore();
+
 const playControl = {
     startDelay: 500,
     record: false,
-    duration: 3000,
+    duration: 1500,
 }
 
+
 onBeforeMount(async () => {
-    await getTimelineData('2023-05-16')
     await updateTimelineData()
     // toolClick('play')
 })
 
-const renderFlags = () => {
-    rt.render();
+const renderFlags = (resetRuler: boolean = false) => {
+    rt.render(resetRuler);
     refreshFlag.value = !refreshFlag.value
     setTimeout(() => {
         clickFlag(0)
@@ -119,7 +129,9 @@ const toolClick = async (type) => {
 
         playing.value = false
     } else if (type == 'github') {
-        window.location.href = 'https://github.com/sklongger/AI-timeline-geomap';
+        window.location.href = 'https://github.com/sklongger/AI-timeline-geomap'
+    } else if (type == 'edit') {
+        window.open('https://gvy72b8f8g2.feishu.cn/base/Cajlby8PlakNnxsg3Vwcbb5nnOe?table=tblR6iDl2RfXsKEo&view=vewcINzc9R', '_blank')
     }
     renderFlags();
 };
@@ -176,10 +188,12 @@ async function preloadImages(urlList) {
 
 }
 
-async function getTimelineData(date: string) {
-    const data = await getTimeline()
-    const tpl = structuredClone(timelineConfig).flags[0];
+async function getTimelineData(data: Array<object>) {
+    // 访问路由参数
+    timelineData.init = false
     let preloadList = []
+    timelineData.flags = []
+    const tpl = structuredClone(timelineConfig).flags[0]
     data.forEach(element => {
         tpl['timeStr'] = element['date']
         tpl['title'] = element['title']
@@ -195,12 +209,12 @@ async function getTimelineData(date: string) {
         preloadList = [...preloadList, ...element['imgs']]
     });
     refreshFlag.value = !refreshFlag.value
-    renderFlags()
+    renderFlags(true)
     setTimeout(() => {
         timelineData.init = true
     }, 0);
     await preloadImages(preloadList)
-    
+
 }
 async function updateTimelineData() {
     store.subscribe(async (mutation, state) => {
@@ -209,8 +223,11 @@ async function updateTimelineData() {
             const msgType = state.msgType
             const updateData = state.updateData
             switch (msgType) {
-                case 'tech_news':
-                    await getTimelineData(updateData.date)
+                case TimelineType.TECHNEWS:
+                    await getTimelineData(updateData)
+                    break;
+                case TimelineType.HISTORYGEOMAP:
+                    await getTimelineData(updateData)
                     break;
                 default:
                     break;
@@ -358,6 +375,7 @@ async function updateTimelineData() {
 
             .flagwraper {
                 height: calc(100% - 20px);
+
                 .timeflag {
                     cursor: pointer;
                     position: absolute;
