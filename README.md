@@ -4,37 +4,33 @@
     <img src="icon.ico" width="100"/>
 </p>
 
-## AI-timeline-geomap: A framework that allows for the flexible construction of time-space information displays.
+## AI-timeline-geomap: 一套可以随心所欲构建时间-空间信息展示的框架
 
-We designed and built **AI-timeline-geomap** because we believe that presenting information through coupled space-time can significantly enhance the effectiveness of information delivery. This applies to various types of content, such as news, history, personal travel logs, business research, and knowledge integration, allowing macro and structural information to be conveyed to users immediately. Adhering to this philosophy, we are not fixated on promoting existing UI components; the component demos provided are merely illustrative. Therefore, the spatiotemporal components in the code can be flexibly replaced or developed according to needs. The multimedia components built on top of timelines and maps can also be flexibly interchanged.
+我们设计构建了**AI-timeline-geomap**，因为我们相信通过耦合的时空来承载展现信息能够数倍提升信息的呈现效果，诸如新闻、历史，以及个人游记、商业调研、知识整合等等，可以将宏观、框架性信息第一时间灌输给用户，为此理念，我们并不执着于推广现成的UI组件，展示的组件demo仅为抛砖引玉，因此代码中的时空组件可以灵活地根据需求替换开发，构建在时间轴、地图组件上的图文组件更是可以灵活替换。
 
-In our demo, we utilized modern AI technologies such as RAG to construct spatiotemporal information. Building a more powerful and comprehensive AI suite to better adapt to the spatiotemporal system is a key goal for the future. This will be pursued after the frontend code is relatively mature. We also hope to collaborate with excellent developers on this endeavor.
+我们在demo中使用了RAG等现代AI技术来构建时空信息，构建更强大完备的AI套件来适配时空系统，是未来的重点目标，会在前端代码较为完善后展开，也希望优秀的开发者一同探讨
 
-[[中文README](https://github.com/sklongger/AI-timeline-geomap/blob/main/README_zh.md)]
+[[English README](https://github.com/sklongger/AI-timeline-geomap/blob/main/README.md)]
 
-## 📰 News
-- **[2024.11.15]** An editable time-space map of historical figures has been released. You can use AI capabilities (we have set up the coze intelligent agent) to create time-space maps of characters you are interested in. We welcome you to try it out and join the discussion group for the time-space map of historical figures!
-- **[2024.09.29]** The mobile-responsive design has been initially adapted. Please try the demo. Looking forward to your suggestions for improving the design of mobile styles!
+- **[2024.11.15]** 发布了可编辑的历史人物-时空地图，你可以借助AI能力（我们搭建了coze智能体），创建感兴趣的人物的时空地图，欢迎体验，欢迎加入历史人物时空地图的讨论群！
+- **[2024.09.29]** 初步适配移动端，欢迎尝试demo，期待您对移动端样式设计的改进建议！
 
 ## 🎥 Demo List
-
-[Time-Space Map of Historical Figures](https://autumnriver.tech/timemap?appName=historygeomap&person=demo). For more detailed usage and experience methods, please refer to [this document](https://gvy72b8f8g2.feishu.cn/base/Cajlby8PlakNnxsg3Vwcbb5nnOe?table=ldxas3H4wYfgjLo7).
+[历史人物时空地图](https://autumnriver.tech/timemap?appName=historygeomap&person=demo). 更详细的使用、体验方法，请参考[此文档](https://gvy72b8f8g2.feishu.cn/base/Cajlby8PlakNnxsg3Vwcbb5nnOe?table=ldxas3H4wYfgjLo7).
 <figure class="half">
     <div style="display:flex">
         <div><img src="https://github.com/user-attachments/assets/bb494575-0062-4121-b236-54cb8fd3b6a5" width="100%" /></div>
     </div>
 </figure>
 
-[Daily science news](https://autumnriver.tech/timemap?appName=technews)
+[每日科技趣闻](http://101.42.16.7/timemap)
 <figure class="half">
-    <div style="display:flex">
-        <div><img src="https://github.com/user-attachments/assets/512488e0-6147-487a-86e1-4dc951503507" width="100%" /></div>
-        <div><img src="https://github.com/user-attachments/assets/0487707d-c6a4-4261-b052-09754ebd24bc" width="100%" /></div>
-    </div>
+    <img src="https://github.com/user-attachments/assets/512488e0-6147-487a-86e1-4dc951503507">
+    <img src="https://github.com/user-attachments/assets/0487707d-c6a4-4261-b052-09754ebd24bc">
 </figure>
 
 
 
 
-## Code Framework
-To Be Continued
+## 代码框架
+待续
