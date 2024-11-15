@@ -10,7 +10,7 @@ We designed and built **AI-timeline-geomap** because we believe that presenting 
 
 In our demo, we utilized modern AI technologies such as RAG to construct spatiotemporal information. Building a more powerful and comprehensive AI suite to better adapt to the spatiotemporal system is a key goal for the future. This will be pursued after the frontend code is relatively mature. We also hope to collaborate with excellent developers on this endeavor.
 
-[[中文README](https://github.com/sklongger/AI-timeline-geomap/blob/main/README_zh.md)]
+[[中文README](https://github.com/sklongger/AI-timeline-geomap/blob/main/README.md)]
 
 ## 📰 News
 - **[2024.11.15]** An editable time-space map of historical figures has been released. You can use AI capabilities (we have set up the coze intelligent agent) to create time-space maps of characters you are interested in. We welcome you to try it out and join the discussion group for the time-space map of historical figures!
