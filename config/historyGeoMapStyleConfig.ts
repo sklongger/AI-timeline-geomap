@@ -46,7 +46,6 @@ const isMobile = window.matchMedia(`(max-width: ${mobileMaxWidth}px)`).matches
 
 if (isMobile) {
     Object.assign(timelineStyleConfig, {
-        containerWidth: 800,
         flagWidth: 106,
         flagHeight: 40,
         rulerNum: 6,

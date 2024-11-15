@@ -29,7 +29,8 @@
                         {{ rulermarker.content }}
                     </div>
                 </div>
-                <div class="suffix">
+                <div class="suffix"
+                    :style="{ left: (timelineData.flags.length ? timelineData.flags.slice(-1)[0]['position'] + timeline.flagWidth * 1.5 : -200) + 'px' }">
                     <div class="asklike">
                         <img src="@/assets/icon.jpg">
                     </div>
@@ -41,7 +42,7 @@
 
 <script setup lang='ts'>
 import { getTimeline } from '@/api/timeline.ts';
-import { ref, onBeforeMount, computed } from 'vue';
+import { ref, onBeforeMount, computed, watch } from 'vue';
 import timelineConfig from '@/api/timeline.config_tpl.ts';
 import { renderTimeline, TimelineType, TimelineStyle } from '@/components/timeline/renderTimeline.ts';
 import { PlusCircleTwoTone, MinusCircleTwoTone, HomeTwoTone, PlayCircleTwoTone, PauseCircleTwoTone, GithubOutlined, EditTwoTone } from '@ant-design/icons-vue';
@@ -59,6 +60,7 @@ const styleConfig = computed(() => {
 })
 const timelineStyleConfig = styleConfig.value.timelineStyleConfig
 const isMobile = styleConfig.value.isMobile
+let asklikeLeft = -200
 
 let timelineData = structuredClone(timelineConfig)
 timelineData.flags = []
@@ -72,7 +74,6 @@ const playControl = {
     record: false,
     duration: 1500,
 }
-
 
 onBeforeMount(async () => {
     await updateTimelineData()
@@ -302,25 +303,18 @@ async function updateTimelineData() {
             cursor: move;
             position: absolute;
             height: calc(100% - 5px);
-            width: 130%;
+            width: 100%;
             transition: left 0.5s ease;
 
             .suffix {
-                .asklike {
-                    position: absolute;
-                    right: 0px;
-                    top: 50%;
-                    transform: translate(200%, -50%);
-                    content: '';
-                    height: 160px;
-                    width: 160px;
-                    border-radius: 50%;
+                position: absolute;
+                top: 50%;
+                transform: translate(0%, -50%);
 
-                    img {
-                        width: 100%;
-                        height: 100%;
-                        border-radius: 50%;
-                    }
+                img {
+                    height: 140px;
+                    width: 140px;
+                    border-radius: 50%;
                 }
             }
 

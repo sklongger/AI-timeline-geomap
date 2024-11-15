@@ -289,8 +289,10 @@ export class renderTimeline {
         let scale = 1
         flags.forEach((flag, index) => {
             if (index > 2) {
-                maxSpan = Math.max(maxSpan, this.calInterval(flags[index - 3]["time"], flag["time"]));
-                minSpan = Math.min(minSpan, this.calInterval(flags[index - 3]["time"], flag["time"]));
+                if (flags[index - 1]["time"] < flag["time"]) {
+                    maxSpan = Math.max(maxSpan, this.calInterval(flags[index - 3]["time"], flag["time"]))
+                    minSpan = Math.min(minSpan, this.calInterval(flags[index - 3]["time"], flag["time"]))
+                }
             }
         })
         if (minSpan * ruler < this.timeline.flagWidth) {
