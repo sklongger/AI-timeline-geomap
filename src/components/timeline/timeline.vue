@@ -178,7 +178,6 @@ const play = (index) => {
 
 async function preloadImages(urlList) {
     for (const url of urlList) {
-        console.log(url)
         await new Promise((resolve, reject) => {
             const img = new Image();
             img.onload = () => resolve(img);
@@ -311,7 +310,7 @@ async function updateTimelineData() {
                     position: absolute;
                     right: 0px;
                     top: 50%;
-                    transform: translate(50%, -50%);
+                    transform: translate(200%, -50%);
                     content: '';
                     height: 160px;
                     width: 160px;

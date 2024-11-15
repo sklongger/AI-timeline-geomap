@@ -283,7 +283,26 @@ export class renderTimeline {
         const flags = this.timelineData.flags;
         this.sortFlags();
         let ruler = timeWidth / (this.calInterval(flags[0]["time"], flags[flags.length - 1]["time"]));
-        return ruler;
+        //时间轴上flag的最大间距
+        let maxSpan = 0
+        let minSpan = Number.POSITIVE_INFINITY
+        let scale = 1
+        flags.forEach((flag, index) => {
+            if (index > 2) {
+                maxSpan = Math.max(maxSpan, this.calInterval(flags[index - 3]["time"], flag["time"]));
+                minSpan = Math.min(minSpan, this.calInterval(flags[index - 3]["time"], flag["time"]));
+            }
+        })
+        if (minSpan * ruler < this.timeline.flagWidth) {
+            let scaleDown = this.timeline.flagWidth / (minSpan * ruler)
+            let scaleUp = timeWidth / (maxSpan * ruler)
+            if (scaleDown < scaleUp) {
+                scale = scaleDown
+            } else {
+                scale = scaleUp
+            }
+        }
+        return ruler * scale;
     }
 
 }
