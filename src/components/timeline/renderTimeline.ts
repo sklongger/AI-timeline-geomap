@@ -115,12 +115,12 @@ export class renderTimeline {
         flags.forEach((item) => {
             let timeStr = item.timeStr
             if (timeStr.startsWith('-')) {
-                const timeArr = timeStr.slice(1).split('-')
-                timeArr[0] = timeArr[0].padStart(6, '0')
-                timeStr = `-${timeArr.join()}`
+                timeStr = timeStr.substring(1)
+                const dateArr = timeStr.split('-')
+                item.time = new Date(-parseInt(dateArr[0]), parseInt(dateArr[1]) - 1, parseInt(dateArr[2]))
+            } else {
+                item.time = new Date(timeStr)
             }
-
-            item.time = new Date(timeStr)
         })
     }
 
