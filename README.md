@@ -23,7 +23,7 @@
     </div>
 </figure>
 
-[每日科技趣闻](http://101.42.16.7/timemap)
+[每日科技趣闻](https://autumnriver.tech/timemap?appName=technews)
 <figure class="half">
     <img src="https://github.com/user-attachments/assets/512488e0-6147-487a-86e1-4dc951503507">
     <img src="https://github.com/user-attachments/assets/0487707d-c6a4-4261-b052-09754ebd24bc">
