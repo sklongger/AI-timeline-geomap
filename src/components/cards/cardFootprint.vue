@@ -135,7 +135,7 @@ const generate = async() => {
         })
     store.commit('content/updateCardShowState', false)
     await getTimelineData(person.value)
-    messageKey = message.loading(`正在努力为您生成${person.value}的时空信息，需要几十秒深知一两分钟的时间，请您耐心等待，不要重复输入...`, 0)
+    messageKey = message.loading(`正在努力为您生成${person.value}的时空信息，需要几十秒甚至一两分钟的时间，请您耐心等待，不要重复输入...`, 0)
 }
 
 const search = async () => {
