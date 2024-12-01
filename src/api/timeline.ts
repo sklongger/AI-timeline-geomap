@@ -11,3 +11,16 @@ export async function getTimeline(timelineType: TimelineType, data: Object): Pro
         data
     })
 }
+
+export async function generatePerson(person: string): Promise<[]> {
+    return request({
+        url: `/geotime/generate_person`,
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: {
+            person
+        }
+    })
+}
