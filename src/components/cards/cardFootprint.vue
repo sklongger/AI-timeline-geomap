@@ -169,7 +169,9 @@ async function getTimelineData(person: string) {
         if (frameWorkInit.timeline == false && data.length > 0) {
             switch_flag = true
             frameWorkInit.timeline = true
-            message.success(`${person}的时空框架已生成`)
+            if (frameWorkInit.generate == true) {
+                message.success(`${person}的时空框架已生成`)
+            }
             if (messageKey) {
                 messageKey()
             }
@@ -177,12 +179,17 @@ async function getTimelineData(person: string) {
         if (frameWorkInit.imgs == false && data.length > 0 && data[0]['imgs'].length > 0) {
             switch_flag = true
             frameWorkInit.imgs = true
-            message.success(`${person}的配图已生成`)
+            if (frameWorkInit.generate == true) {
+                message.success(`${person}的配图已生成`)
+            }
+            
         }
         if (frameWorkInit.detail == false && data.length > 0 && data[0]['summary'].length > 0) {
             switch_flag = true
             frameWorkInit.detail = true
-            message.success(`${person}每个时间点的内容详情已生成`)
+            if (frameWorkInit.generate == true) {
+                message.success(`${person}每个时间点的内容详情已生成`)
+            }
         }
         if (switch_flag) {
             store.commit('timeline/updateTimeline', {
