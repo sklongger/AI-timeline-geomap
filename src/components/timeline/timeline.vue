@@ -3,13 +3,13 @@
         <div class="container_background">
             <div id="toolbox">
                 <GithubOutlined :style="{ fontSize: '18px', color: 'rgb(24, 144, 255)' }"
-                    @click="toolClick('github')" />
+                    @click="toolClick('github')"/>
                 <HomeTwoTone :style="{ fontSize: '18px' }" @click="toolClick('home')" />
                 <PlayCircleTwoTone :style="{ fontSize: '18px' }" @click="toolClick('play')" v-if="!playing" />
                 <PauseCircleTwoTone :style="{ fontSize: '18px' }" @click="toolClick('stop')" v-if="playing" />
                 <EditTwoTone :style="{ fontSize: '18px' }" @click="toolClick('edit')" />
-                <!-- <PlusCircleTwoTone :style="{ fontSize: '18px' }" @click="toolClick('magnify')" v-if="!isMobile" />
-                <MinusCircleTwoTone :style="{ fontSize: '18px' }" @click="toolClick('reduce')" v-if="!isMobile" /> -->
+                <!-- <PlusCircleTwoTone :style="{ fontSize: '18px' }" @click="toolClick('magnify')" v-if="!isMobile"/>
+                <MinusCircleTwoTone :style="{ fontSize: '18px' }" @click="toolClick('reduce')" v-if="!isMobile"/> -->
             </div>
             <div class="baseline_v" :style="{ left: `${timeline['baseLineOffset'] * 100}%` }"></div>
             <div class="baseline_h"></div>
@@ -41,12 +41,10 @@
 </template>
 
 <script setup lang='ts'>
-import { getTimeline } from '@/api/timeline.ts';
 import { ref, onBeforeMount, computed, watch } from 'vue';
 import timelineConfig from '@/api/timeline.config_tpl.ts';
 import { renderTimeline, TimelineType, TimelineStyle } from '@/components/timeline/renderTimeline.ts';
 import { PlusCircleTwoTone, MinusCircleTwoTone, HomeTwoTone, PlayCircleTwoTone, PauseCircleTwoTone, GithubOutlined, EditTwoTone } from '@ant-design/icons-vue';
-import { message } from 'ant-design-vue';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 import { recordVideo, stopRecordVideo } from '@/utils/record.ts';
@@ -57,6 +55,9 @@ const ANIMATEDURATION = 2700 + 2000 + 550
 
 const styleConfig = computed(() => {
     return store.state.style
+})
+const isMobile = computed(() => {
+    return store.state.style.isMobile
 })
 const timelineStyleConfig = styleConfig.value.timelineStyleConfig
 
@@ -82,12 +83,17 @@ const renderFlags = (resetRuler: boolean = false) => {
     rt.render(resetRuler);
     refreshFlag.value = !refreshFlag.value
     setTimeout(() => {
-        clickFlag(0)
+        goToFlag(0)
     }, 1000);
 
 }
 const clickFlag = (index) => {
-    goToFlag(index);
+    if (index != timeline.activeFlag) {
+        goToFlag(index)
+    }
+};
+
+const goToFlag = (index) => {
     refreshFlag.value = !refreshFlag.value
     const flag = timelineData.flags[index]
     store.commit('content/updateContent', {
@@ -95,9 +101,6 @@ const clickFlag = (index) => {
         location: flag['location'],
         locationName: flag['locationName']
     });
-};
-
-const goToFlag = (index) => {
     timeline.activeFlag = index;
     rt.positionFlags();
     timeline.init = true;
@@ -107,9 +110,6 @@ const toolClick = async (type) => {
     if (type === 'magnify' || type === 'reduce') {
         rt.zoom(type)
     } else if (type === 'home') {
-        // router.replace({
-        //     name: 'news'
-        // })
         goToFlag(0)
     } else if (type == 'play') {
         playing.value = true
@@ -128,7 +128,7 @@ const toolClick = async (type) => {
 
         playing.value = false
     } else if (type == 'github') {
-        window.location.href = 'https://github.com/sklongger/AI-timeline-geomap'
+        window.open('https://github.com/sklongger/AI-timeline-geomap', '_blank')
     } else if (type == 'edit') {
         window.open('https://gvy72b8f8g2.feishu.cn/base/Cajlby8PlakNnxsg3Vwcbb5nnOe?table=tblR6iDl2RfXsKEo&view=vewcINzc9R', '_blank')
     }
@@ -158,7 +158,7 @@ const play = (index) => {
     } else {
         duration = playControl.duration + ANIMATEDURATION
     }
-    clickFlag(flagIndex);
+    goToFlag(flagIndex);
     setTimeout(() => {
         if (playControl.record) {
             index += 1
@@ -260,17 +260,18 @@ async function updateTimelineData() {
 
         #toolbox {
             position: absolute;
-            top: 42%;
-            transform: translate(0%, -50%);
+            top: 4px;
+            /* transform: translate(0%, -50%); */
             /* 使用translate属性水平垂直居中 */
             font-size: 12px;
-            height: 76%;
+            height: 85%;
             width: 30px;
             background: rgba(253, 254, 240, 1);
             display: flex;
             flex-direction: column;
             /* 设置子元素纵向排列 */
             justify-content: space-around;
+            align-items: center;
             padding: 10px 0;
             box-shadow: 6px 6px 2px #ccc;
             z-index: 999;

@@ -18,7 +18,7 @@ In our demo, we utilized modern AI technologies such as RAG to construct spatiot
 
 ## 🎥 Demo List
 
-[Time-Space Map of Historical Figures](https://autumnriver.tech/timemap?appName=historygeomap&person=demo). For more detailed usage and experience methods, please refer to [this document](https://gvy72b8f8g2.feishu.cn/base/Cajlby8PlakNnxsg3Vwcbb5nnOe?table=ldxas3H4wYfgjLo7).
+[Time-Space Map of Historical Figures](https://autumnriver.tech/timemap?appName=historygeomap&person=项羽). For more detailed usage and experience methods, please refer to [this document](https://gvy72b8f8g2.feishu.cn/base/Cajlby8PlakNnxsg3Vwcbb5nnOe?table=ldxas3H4wYfgjLo7).
 <figure class="half">
     <div style="display:flex">
         <div><img src="https://github.com/user-attachments/assets/bb494575-0062-4121-b236-54cb8fd3b6a5" width="100%" /></div>
