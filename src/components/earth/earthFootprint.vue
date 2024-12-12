@@ -11,7 +11,8 @@ import * as d3 from 'd3';
 import { onMounted, computed, render, h, reactive, ref } from 'vue';
 import { useStore } from 'vuex';
 import { EnvironmentTwoTone } from '@ant-design/icons-vue';
-
+// 从json文件中导入地理数据
+import regionCoordinates from '../../../boundary.json';
 const store = useStore();
 
 const styleConfig = computed(() => {
@@ -28,6 +29,26 @@ const Y_OFFSET = SIZE / 2
 let lat_offset = 0
 let lng_offset = 0
 let showDelay
+const drawRegion = (svg, path, coordinates) => {
+    // 构造 GeoJSON 格式
+    const regionGeoJSON = {
+        type: "Feature",
+        geometry: {
+            type: "Polygon",
+            coordinates: [coordinates] // GeoJSON 坐标格式：二维数组
+        }
+    };
+    console.log(regionGeoJSON)
+
+    // 绘制区域
+    svg.append("path")
+        .datum(regionGeoJSON)
+        .attr("d", path)
+        .attr("fill", "rgba(255, 0, 0, 0.3)") // 区域填充颜色
+        .attr("stroke", "red")               // 区域边框颜色
+        .attr("stroke-width", 2);            // 区域边框宽度
+};
+
 onMounted(() => {
     const projection = d3.geoOrthographic()
         .scale(SIZE / 2 - 0.5)
@@ -64,8 +85,14 @@ onMounted(() => {
                     centerPosition(svg, projection, path, state);
                 }
             });
+        }).then(() => {
+            const regionCoordinates1 = [[116, 42], [108, 38], [110, 35], [116, 42]]
+            drawRegion(svg, path, regionCoordinates);
         })
+    // let regionCoordinates1 = [[116, 42], [108, 38], [110, 35], [116, 42]]
+    // drawRegion(svg, path, regionCoordinates1);
 });
+
 
 const centerPosition = (svg, projection, path, state, animate = true) => {
     const locationName = state.locationName;

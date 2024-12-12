@@ -1,6 +1,7 @@
 
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import map from '@/views/map.vue';
+import mapTest from '@/views/mapTest.vue';
 
 const routes: Array<RouteRecordRaw> = [
     { path: "/", redirect: "/timemap" },
@@ -9,6 +10,11 @@ const routes: Array<RouteRecordRaw> = [
         name: 'timemap',
         component: map
     },
+    {
+        path: '/mapTest',
+        name: 'mapTest',
+        component: mapTest
+    }
 ];
 
 const router = createRouter({
