@@ -8,17 +8,19 @@
 import * as d3 from "d3";
 import { onMounted } from "vue";
 import regionCoordinates from '../../boundary.json';
-import regionCoordinatesList from '../../result1.json';
+import regionCoordinatesList from '../../1083_boundary.json';
 console.log(regionCoordinatesList)
 
-const drawRegion = (svg, path, coordinatesList) => {
-
+const drawRegion = (svg, path, coordinatesList, projection) => {
     // 构造 GeoJSON 格式
-    coordinatesList = coordinatesList.slice(0, 20)
-    coordinatesList.forEach((coordinates) => {
-        coordinates.push(coordinates[0]);
+    let start = new Date().getTime();
+    coordinatesList.forEach((region) => {
+        let coordinates = region.boundary;
+        // coordinates.push(coordinates[0]); // 闭合路径
+        coordinates = coordinates.filter((d, i) => i % 50 === 0); 
+        coordinates.push(coordinates[0])
 
-        // 绘制路径
+        // 创建 GeoJSON 格式的路径
         const pathJSON = {
             type: "Feature",
             geometry: {
@@ -26,55 +28,41 @@ const drawRegion = (svg, path, coordinatesList) => {
                 coordinates: coordinates
             }
         };
-        let color = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`
+
+        // 随机生成颜色
+        let color = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 1)`;
+
+        // 绘制区域路径
         svg.append("path")
             .datum(pathJSON)
             .attr("d", path)
             .attr("fill", color)
-            .attr("stroke", 'white')
-            .attr("stroke-width", 1);
-        // const regionGeoJSON = {
-        //     type: "Feature",
-        //     geometry: {
-        //         type: "Polygon",
-        //         coordinates: [coordinates] // GeoJSON 坐标格式：二维数组
-        //     }
-        // };
-        // // 绘制成随机的颜色
-        // let color = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.3)`
-        // svg.append("path")
-        // .datum(regionGeoJSON)
-        // .attr("d", path)
-        // .attr("fill", color) // 区域填充颜色
-        // .attr("stroke", "red")               // 区域边框颜色
-        // .attr("stroke-width", 2)        // 区域边框宽度
-        // .attr("fill-rule", "evenodd"); 
-    })
-    
-    // console.log(regionGeoJSON)
+            .attr("stroke", 'grey')
+            .attr("stroke-width", 2);
 
-    // 绘制区域
-    // svg.append("path")
-    //     .datum(regionGeoJSON)
-    //     .attr("d", path)
-    //     .attr("fill", "rgba(255, 0, 0, 0.3)") // 区域填充颜色
-    //     .attr("stroke", "red")               // 区域边框颜色
-    //     .attr("stroke-width", 2);            // 区域边框宽度
-    // 绘制路径
-    // const pathJSON = {
-    //     type: "Feature",
-    //     geometry: {
-    //         type: "LineString",
-    //         coordinates: coordinates
-    //     }
-    // };
-    // svg.append("path")
-    //     .datum(pathJSON)
-    //     .attr("d", path)
-    //     .attr("fill", "none")
-    //     .attr("stroke", "red")
-    //     .attr("stroke-width", 1);
+        // **计算路径的中心点 (centroid)**
+        const centroid = d3.geoPath().centroid({
+          type: "Polygon", // 改成 Polygon 类型
+          coordinates: [coordinates]
+        });
+        console.log(centroid);
+
+        // **添加地名文本**
+        const [x, y] = projection(centroid)
+        svg.append("text")
+            .attr("x", x)
+            .attr("y", y)
+            .attr("text-anchor", "middle") // 让文本居中对齐
+            .attr("dy", "0.35em") // 垂直居中
+            .style("font-size", "20px")
+            .style("font-weight", "bold")
+            .style("fill", "black") // 文字颜色
+            .text(region.name); // 使用 coordinates.name 标记地名
+    });
+    let end = new Date().getTime();
+    console.log("Time: " + (end - start) + "ms");
 };
+
 
 onMounted(() => {
   const WIDTH = 800; // 地图宽度
@@ -133,7 +121,7 @@ onMounted(() => {
     const regionCoordinates1 = [[116, 42], [108, 38], [110, 35], [116, 42]];
     // let regionCoordinates1 = regionCoordinates.map(([i, j]) => [j, i])
     // console.log(regionCoordinates1);
-    drawRegion(svg, path, regionCoordinatesList);
+    drawRegion(svg, path, regionCoordinatesList, projection);
     // drawRegion(svg, path, regionCoordinates1);
 
   });
