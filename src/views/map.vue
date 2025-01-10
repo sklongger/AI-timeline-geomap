@@ -9,6 +9,7 @@
         <div class="map" v-if="appName == 'historygeomap'">
             <card-footprint></card-footprint>
             <earth-footprint></earth-footprint>
+            <!-- <earth></earth> -->
             <Timeline />
         </div>
     </div>
@@ -20,6 +21,7 @@ import Timeline from '@/components/timeline/timeline.vue'
 import EarthNews from '@/components/earth/earthNews.vue'
 import CardNews from '@/components/cards/cardNews.vue'
 import EarthFootprint from '@/components/earth/earthFootprint.vue'
+import Earth from '@/components/mapbox/earth.vue'
 import cardFootprint from '@/components/cards/cardFootprint.vue'
 import { loadStyle } from '@/styleConfig/loadStyle.ts'
 
