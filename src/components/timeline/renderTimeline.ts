@@ -5,7 +5,7 @@ export enum TimelineType {
     HISTORYGEOMAP = 'historygeomap'
 }
 export interface TimelineData {
-    init: boolean;
+    init: boolean;//初始化后的时间轴才会显示，给template用的
     rulerMarkers: {
         content?: null | String;
         timeType?: null | String;
@@ -156,13 +156,16 @@ export class renderTimeline {
         const baseDay = this.calBaseDay();
         const daysInterval = days / ((this.timeline.rulerNum - 1) / 2);
         const radius = daysInterval / 2;
+        let degeneracy = false;
         var rulerMarkers = this.timelineData.rulerMarkers;
         for (let i = 0; i < this.timeline.rulerNum; i++) {
             rulerMarkers[i] = {};
             rulerMarkers[i].time = new Date();
             rulerMarkers[i].time.setTime(baseDay.getTime() + i * daysInterval * ONEDAYMILLSECONDS);
-            if (Math.abs(this.calInterval(rulerMarkers[i].time, flags[this.timeline.activeFlag].time)) <= radius) {
+            //这部分是为了保证activeFlag总是有时间刻度显示的，但如果时间刻度刚好在两个刻度重点就回导致两个刻度都偏移到activeFlag的位置上，所以设置了简并变量，保证只有一个刻度偏移
+            if (Math.abs(this.calInterval(rulerMarkers[i].time, flags[this.timeline.activeFlag].time)) <= radius && !degeneracy) {
                 rulerMarkers[i].time.setTime(flags[this.timeline.activeFlag].time.getTime());
+                degeneracy = true;
             }
             rulerMarkers[i].position = this.time2Position(rulerMarkers[i].time) - this.timeline.rulerMarkerWidth * 0.5;
             const { content, timeType } = this.time2Display(rulerMarkers[i].time);

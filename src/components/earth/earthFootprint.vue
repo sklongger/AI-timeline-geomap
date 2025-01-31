@@ -39,7 +39,16 @@ onMounted(() => {
         .attr("height", SIZE)
         .style("background-color", OCEANCOLOR)
         .style('border-radius', '50%')
-
+    const colormap = {
+        '宋': '#FF6347',
+        '契丹': '#FFD700',
+        '黠戛斯-斡朗改': '#008000',
+        '西夏': '#0000FF',
+        '黄头回鹘': '#800080',
+        '高昌回鹘': '#FFA500',
+        '大理': '#FFFF00',
+        '吐蕃': '#00FFFF',
+    }
     d3.json('/world.json')
         .then(data => {
 
@@ -49,9 +58,19 @@ onMounted(() => {
                 .enter()
                 .append("path")
                 .attr("d", path)
-                .attr("fill", LANDCOLOR)
+                .attr("fill", function(d) { 
+                    if (d['properties'].name in colormap) {
+                        return colormap[d['properties'].name]
+                    }
+                    return LANDCOLOR 
+                })
                 .attr("stroke", COUNTRYCOLOR)
-                .attr("stroke-width", COUNTRYBORDER);
+                .attr("stroke-width", function(d) {
+                    if (d['properties'].name in colormap) {
+                        return 0
+                    }
+                    return COUNTRYBORDER
+                })
 
             centerPosition(svg, projection, path, {
                 location: [116, 39],

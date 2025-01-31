@@ -31,7 +31,9 @@ const earthStyleConfig = {
     "country-color": "#fff",
     "country-border": 0.6,
     "background": "@/assets/background4.jpg",
-    "globe-size": 1000
+    "globe-size": 1000,
+    "initialZoom": 2.5,
+    "mapOffset": "300px",
 }
 
 const cardStyleConfig = {
@@ -44,6 +46,9 @@ const cardStyleConfig = {
 
 const isMobile = window.matchMedia(`(max-width: ${mobileMaxWidth}px)`).matches
 
+const mode = 'video' // 'website' | 'video'
+// const mode = 'website' // 'website' | 'video'
+
 if (isMobile) {
     Object.assign(timelineStyleConfig, {
         flagWidth: 106,
@@ -54,7 +59,8 @@ if (isMobile) {
         flagMargin: 10,
     })
     Object.assign(earthStyleConfig, {
-        
+        "initialZoom": 2.1,
+        "mapOffset": "0px",
     })
 
     Object.assign(cardStyleConfig, {
@@ -80,6 +86,8 @@ function configStyle(): void {
     root.style.setProperty('--card-paragraph-margin--', `${cardStyleConfig.cardParagraphMargin}`)
     root.style.setProperty('--search-width--', `${cardStyleConfig.searchWidth}`)
 
+    root.style.setProperty('--map-offset--', `${earthStyleConfig.mapOffset}`)
+
     root.style.setProperty('--screen-height--', window.innerHeight + 'px')
 }
 
@@ -89,5 +97,6 @@ export {
     timelineStyleConfig,
     earthStyleConfig,
     cardStyleConfig,
-    isMobile
+    isMobile,
+    mode
 }

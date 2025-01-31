@@ -10,10 +10,11 @@ export async function loadStyle(appName: string, store: Store<any>) {
     let earthStyleConfig;
     let cardStyleConfig;
     let isMobile;
+    let mode;
 
 
     if (appName == TimelineType.HISTORYGEOMAP) {
-        ({ timelineStyleConfig, earthStyleConfig, cardStyleConfig, isMobile } = await import(`@/../config/historyGeoMapStyleConfig.ts`))
+        ({ timelineStyleConfig, earthStyleConfig, cardStyleConfig, isMobile, mode } = await import(`@/../config/historyGeoMapStyleConfig.ts`))
     } else if (appName == TimelineType.TECHNEWS) {
         ({ timelineStyleConfig, earthStyleConfig, cardStyleConfig, isMobile } = await import(`@/../config/techNewsStyleConfig.ts`))
     }
@@ -22,6 +23,7 @@ export async function loadStyle(appName: string, store: Store<any>) {
         timelineStyleConfig,
         earthStyleConfig,
         cardStyleConfig,
-        isMobile
+        isMobile,
+        mode
     })
 };

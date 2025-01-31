@@ -15,7 +15,7 @@
 }
 
 .ant-card-body {
-  padding: 6px!important;
+  padding: 6px !important;
 }
 
 a {
@@ -23,6 +23,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -52,9 +53,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -71,14 +74,26 @@ button:focus-visible {
   text-align: center;
 }
 
+.mapboxgl-control-container {
+  display: none !important;
+}
+
+.mapboxgl-popup-close-button {
+  display: none;
+}
+
+/* .mapboxgl-canvas { position: fixed !important; } */
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }

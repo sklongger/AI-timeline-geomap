@@ -56,15 +56,17 @@ const style = {
         timelineStyleConfig: {} as TimelineStyle,
         earthStyleConfig: {},
         cardStyleConfig: {},
-        isMobile: false
+        isMobile: false,
+        mode: 'website'
     },
     mutations: {
         updateStyle(state, data) {
-            const { timelineStyleConfig, earthStyleConfig, cardStyleConfig, isMobile } = data
+            const { timelineStyleConfig, earthStyleConfig, cardStyleConfig, isMobile, mode } = data
             state.timelineStyleConfig = timelineStyleConfig
             state.earthStyleConfig = earthStyleConfig
             state.cardStyleConfig = cardStyleConfig
             state.isMobile = isMobile
+            state.mode = mode
         }
     }
 }

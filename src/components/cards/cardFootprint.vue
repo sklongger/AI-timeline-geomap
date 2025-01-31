@@ -3,7 +3,7 @@
         <div class="search_container">
             <a-input-search class="search" v-model:value="person" placeholder="输入你想搜索的历史人物" enter-button @search="search" />
         </div>
-        <a-modal v-model:visible="tipVisible" title="生成时空轴" @ok="generate" cancelText="取消" okText="直接生成">
+        <a-modal v-model:open="tipVisible" title="生成时空轴" @ok="generate" cancelText="取消" okText="直接生成">
             <p>{{ person }}的时空轴尚未生成，您可以跳转我们在coze搭建的<a style="color: #1677FF" href="https://www.coze.cn/store/agent/7438913189238046720" target="_blank">历史人物智能体</a>一键生成其时空轴，并在对应的多维表格中对AI生成的时空轴进行编辑修改，或在本页点击直接生成，通常需要几分钟的等待时间</p>
         </a-modal>
         <transition name="card-fade">
@@ -59,10 +59,8 @@ const tipVisible = ref(false)
 let person = ref('')
 
 const styleConfig = computed(() => {
+    console.log(store.state.style)
     return store.state.style
-})
-const isMobile = computed(() => {
-    return store.state.style.isMobile
 })
 
 let messageKey: CallableFunction
@@ -236,6 +234,7 @@ onMounted(async () => {
         width: 100%;
         top: 20px;
         left: 0;
+        z-index: 100;
 
         .search {
             margin: 0 auto;
