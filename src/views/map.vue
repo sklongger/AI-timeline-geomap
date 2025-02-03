@@ -7,8 +7,7 @@
         </div>
 
         <div class="map" v-if="appName == 'historygeomap'">
-            <card-footprint v-if="styleConfig.mode == 'website'"></card-footprint>
-            <card-footprint4-video v-if="styleConfig.mode == 'video'"></card-footprint4-video>
+            <card-footprint></card-footprint>
             <!-- <earth-footprint></earth-footprint> -->
             <!-- <earth-footprint-gl></earth-footprint-gl> -->
             <earth-footprint-mapbox></earth-footprint-mapbox>
@@ -26,7 +25,6 @@ import EarthFootprint from '@/components/earth/earthFootprint.vue'
 import EarthFootprintGl from '@/components/earth/earthFootprintGl.vue'
 import EarthFootprintMapbox from '@/components/earth/earthFootprintMapbox.vue'
 import cardFootprint from '@/components/cards/cardFootprint.vue'
-import cardFootprint4Video from '@/components/cards/cardFootprint4Video.vue'
 import { loadStyle } from '@/styleConfig/loadStyle.ts'
 
 import { onMounted, onBeforeMount, computed, ref } from 'vue'

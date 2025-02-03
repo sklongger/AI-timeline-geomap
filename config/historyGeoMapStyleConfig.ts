@@ -4,6 +4,7 @@ const timelineStyleConfig = {
     "containerId": "timeline_container",
     "containerWidth": null,
     "containerHeight": 220,
+    "containerOffset": 0,//垂直偏移，向上偏移为正
     "activeFlag": 0,
     "offset": 0,
     "flagWidth": 150,//每个flag的宽度
@@ -33,7 +34,7 @@ const earthStyleConfig = {
     "background": "@/assets/background4.jpg",
     "globe-size": 1000,
     "initialZoom": 2.5,
-    "mapOffset": "300px",
+    "mapOffset": "300px",//左右偏移，左为正
 }
 
 const cardStyleConfig = {
@@ -55,16 +56,17 @@ if (isMobile) {
         flagHeight: 40,
         rulerNum: 6,
         baseLineOffset: 0.15,
-        containerHeight: 180,
+        containerHeight: 190,//要与偏移量配合使用
+        containerOffset: 10,//垂直偏移，向上偏移为正
         flagMargin: 10,
     })
     Object.assign(earthStyleConfig, {
-        "initialZoom": 2.1,
-        "mapOffset": "0px",
+        initialZoom: 2.1,
+        mapOffset: "0px",//左右偏移
     })
 
     Object.assign(cardStyleConfig, {
-        maxWidth: '95vw',
+        maxWidth: '90vw',
         cardTitleSize: '16px',
         cardParagraphMargin: '10px',
         cardPaddingLeft: 0,
@@ -79,6 +81,7 @@ function configStyle(): void {
     root.style.setProperty('--marker-height--', `${timelineStyleConfig.flagHeight}px`)
     root.style.setProperty('--timeline-container-height--', `${timelineStyleConfig.containerHeight}px`)
     root.style.setProperty('--timeline-container-width--', `${timelineStyleConfig.containerWidth}px`)
+    root.style.setProperty('--timeline-container-offset--', `${timelineStyleConfig.containerOffset}px`)
 
     root.style.setProperty('--card-width--', `${cardStyleConfig.maxWidth}`)
     root.style.setProperty('--card-padding-left--', `${cardStyleConfig.cardPaddingLeft}`)

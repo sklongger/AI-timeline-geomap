@@ -325,6 +325,7 @@ onMounted(async () => {
     }
 }
 
+/**动画效果 左右横切*/
 .card-fade-enter-from,
 .card-fade-leave-to {
     transform: translateX(20px);
@@ -338,4 +339,5 @@ onMounted(async () => {
 .card-fade-leave-active {
     transition: all 1.0s cubic-bezier(1, 0.5, 0.8, 1);
 }
+
 </style>

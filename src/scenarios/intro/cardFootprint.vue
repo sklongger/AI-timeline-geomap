@@ -170,7 +170,7 @@ onMounted(async () => {
 
       .meta {
         width: 100%;
-        font-size: 12px;
+        font-size: 14px;
         line-height: 20px;
         color: #999;
         text-align: left;
@@ -179,6 +179,9 @@ onMounted(async () => {
   }
 }
 
+
+/**左右淡入淡出 */
+/*
 .card-fade-enter-from,
 .card-fade-leave-to {
   transform: translateX(20px);
@@ -191,5 +194,34 @@ onMounted(async () => {
 
 .card-fade-leave-active {
   transition: all 1s cubic-bezier(1, 0.5, 0.8, 1);
+}*/
+
+
+.card-fade-enter-from {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.card-fade-enter-active {
+    transition: all 0.3s ease-out;
+}
+
+.card-fade-enter-to {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.card-fade-leave-from {
+    opacity: 1;
+  transform: scale(1);
+}
+
+.card-fade-leave-active {
+    transition: all 0.5s ease-in;
+}
+
+.card-fade-leave-to {
+    opacity: 0;
+  transform: scale(0.8); /* 可选：离开时增加轻微缩小效果 */
 }
 </style>

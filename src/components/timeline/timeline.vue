@@ -99,7 +99,6 @@ import {
 } from "@ant-design/icons-vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
-import { recordVideo, stopRecordVideo } from "@/utils/record.ts";
 import MarkerShadow from "@/components/timeline/markers/markerShadow.vue";
 const store = useStore();
 const route = useRoute();
@@ -118,26 +117,24 @@ let playing = ref(false);
 const refreshFlag = ref(true);
 
 const playControl = {
-  startDelay: 500,
+  startDelay: 1000,
   // record: false,
-  record: true ? styleConfig.value.mode == "video" : false,
+  record: false,
   duration: 3,
 };
 
 onBeforeMount(async () => {
   await updateTimelineData();
-  // toolClick('play')
+  await nextTick();
+  renderFlags();
 });
 
 const renderFlags = async (resetRuler: boolean = false) => {
   rt.render(resetRuler);
   await nextTick();
   refreshFlag.value = !refreshFlag.value;
-  if (styleConfig.value.mode == "website") {
-    console.log(styleConfig.value.mode)
-    await nextTick();
-    goToFlag(0);
-  }
+  await nextTick();
+  goToFlag(0);
 };
 const clickFlag = (index) => {
   if (index != timeline.activeFlag) {
@@ -164,18 +161,11 @@ const toolClick = async (type) => {
     goToFlag(0);
   } else if (type == "play") {
     playing.value = true;
-    if (styleConfig.value.mode == "video") {
-      await recordVideo();
-    }
 
     setTimeout(() => {
       play(0);
     }, playControl.startDelay);
   } else if (type == "stop") {
-    if (styleConfig.value.mode == "video") {
-      await stopRecordVideo();
-    }
-
     playing.value = false;
   } else if (type == "github") {
     window.open("https://github.com/sklongger/AI-timeline-geomap", "_blank");
@@ -208,12 +198,7 @@ const play = (index) => {
   // duration = timelineData.flags[flagIndex]["duration"] + ANIMATEDURATION;
   goToFlag(flagIndex);
   setTimeout(() => {
-    if (styleConfig.value.mode == "video") {
-      index += 1;
-    } else {
-      index = (index + 1) % timelineData.flags.length;
-    }
-
+    index = (index + 1) % timelineData.flags.length;
     if (index != timelineData.flags.length && playing.value) {
       play(index);
     } else {
@@ -250,7 +235,9 @@ const getTimelineData = async (data: Array<object>) => {
     tpl["organization"] = element["organization"];
     tpl["website"] = element["website"];
     tpl["titleUrl"] = element["title_url"];
-    tpl["duration"] = element["voice_duration"] ? element["voice_duration"] : playControl.duration;
+    tpl["duration"] = element["voice_duration"]
+      ? element["voice_duration"]
+      : playControl.duration + ANIMATEDURATION / 1000;
     timelineData.flags.push(JSON.parse(JSON.stringify(tpl)));
     preloadList = [...preloadList, ...element["imgs"]];
   });
@@ -329,7 +316,7 @@ const updateTimelineData = async () => {
 
     .baseline_v {
       position: absolute;
-      height: calc(100% - 24px);
+      height: calc(100% - 24px - var(--timeline-container-offset--));
       width: 1.5px;
       left: 10%;
       background: rgb(0, 0, 0, 0.8);
@@ -338,7 +325,7 @@ const updateTimelineData = async () => {
 
     .baseline_h {
       position: absolute;
-      bottom: 22px;
+      bottom: calc(22px + var(--timeline-container-offset--));
       height: 1px;
       width: 100%;
       left: 0;
@@ -358,7 +345,7 @@ const updateTimelineData = async () => {
       .suffix {
         position: absolute;
         top: 50%;
-        transform: translate(0%, -50%);
+        transform: translate(0%, -54%);
 
         img {
           height: 140px;
@@ -370,17 +357,16 @@ const updateTimelineData = async () => {
       .rulermarker {
         font-size: 8px;
         position: absolute;
-        bottom: 0px;
+        /* bottom: 0px; */
+        bottom: calc(0px + var(--timeline-container-offset--) / 2);
+
         z-index: 2;
         height: 14px;
         line-height: 12px;
         color: rgba(255, 255, 255, 1);
         font-weight: bold;
         text-align: center;
-        /* left: 50%; */
         width: 70px;
-        /* background: red; */
-        /* border-right: 1px solid black; */
         overflow: hidden;
 
         &::after {
@@ -390,12 +376,11 @@ const updateTimelineData = async () => {
           width: 1px;
           height: 6px;
           bottom: 18px;
-          /* left: 50%; */
         }
       }
 
       .year_type {
-        font-size: 10px;
+        font-size: 12px;
         width: 70px;
         height: 14px;
         color: rgba(225, 225, 225, 1);

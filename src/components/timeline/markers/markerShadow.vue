@@ -125,14 +125,14 @@ const props = defineProps({
 .pole {
     width: 1px;
     position: absolute;
-    height: calc(var(--timeline-container-height--) - 24px);
+    height: calc(var(--timeline-container-height--) - 24px - var(--timeline-container-offset--));
     top: 0;
     background: rgba(100, 100, 100, 0.2);
     z-index: 2;
 
     .polefooter {
         position: relative;
-        top: calc(var(--timeline-container-height--) - 24px);
+        top: calc(var(--timeline-container-height--) - 24px - var(--timeline-container-offset--));
         left: -1.5px;
         width: 4px;
         height: 4px;

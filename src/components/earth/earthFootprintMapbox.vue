@@ -19,8 +19,8 @@ const mapContainer = ref(null);
 const markers = [];
 const initialZoom = earthStyleConfig.initialZoom;
 const durationMap = {
-  zoomIn: 1500,
-  zoomOut: 1500,
+  zoomIn: 1000,
+  zoomOut: 1000,
   rotate: 3500,
   beforeCardShow: 2500,
   afterCardHidden: 1000,
@@ -235,7 +235,7 @@ const centerPosition = async (state) => {
 
   await flyToPromise(map, {
     center: startPoint,
-    zoom: initialZoom + 0.5,
+    zoom: initialZoom + 1,
     duration: durationMap.zoomIn,
   });
 
@@ -281,7 +281,6 @@ const centerPosition = async (state) => {
 const flyToPromise = (map, options) => {
   return new Promise((resolve, reject) => {
     map.flyTo(options).once("moveend", () => {
-      console.log("moveend!!!");
       resolve();
     }); // 动画结束后 resolve;
   });
