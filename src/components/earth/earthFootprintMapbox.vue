@@ -21,11 +21,11 @@ const initialZoom = earthStyleConfig.initialZoom;
 const durationMap = {
   zoomIn: 1000,
   zoomOut: 1000,
-  rotate: 3500,
-  beforeCardShow: 2500,
+  rotate: 2500,
+  beforeCardShow: 1500,
   afterCardHidden: 1000,
-  residual: 5000,
-}
+  residual: 2000,
+};
 
 let map = ref(null);
 let isRotating = ref(false); // 是否启用旋转
@@ -185,6 +185,7 @@ const centerPosition = async (state) => {
   const endPoint = [longitude, latitude];
 
   clearTimeout(showDelay);
+  map.stop();
   // Remove existing markers
   markers.forEach((marker) => {
     marker.remove();

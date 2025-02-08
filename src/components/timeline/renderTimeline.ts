@@ -83,14 +83,6 @@ export class renderTimeline {
         this.renderFlags(resetRuler);
     }
 
-    public renderFlags(resetRuler: boolean = false): void {
-        if (!this.timeline.ruler || resetRuler) {
-            this.timeline.ruler = this.calRuler(this.timeline.containerWidth * (1 - this.timeline.baseLineOffset) - this.timeline.flagWidth * this.timeline.flagOffsetWidth);
-        }
-        this.setRows();
-        this.renderRulerMarkers();
-    }
-
     public positionFlags(): void {
         let flags = this.timelineData.flags;
         let offset = flags[0].position - flags[this.timeline.activeFlag].position;
@@ -108,6 +100,14 @@ export class renderTimeline {
             this.timeline.ruler /= factor;
             this.timeline.rulerNum /= factor
         }
+    }
+
+    private renderFlags(resetRuler: boolean = false): void {
+        if (!this.timeline.ruler || resetRuler) {
+            this.timeline.ruler = this.calRuler(this.timeline.containerWidth * (1 - this.timeline.baseLineOffset) - this.timeline.flagWidth * this.timeline.flagOffsetWidth);
+        }
+        this.setRows();
+        this.renderRulerMarkers();
     }
 
     private time2Date() {

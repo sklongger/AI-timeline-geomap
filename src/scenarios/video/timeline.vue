@@ -124,7 +124,9 @@ const playControl = {
 };
 
 onBeforeMount(async () => {
-  updateTimelineData();
+  await updateTimelineData();
+  await nextTick();
+  renderFlags();
 });
 
 const renderFlags = async (resetRuler: boolean = false) => {
@@ -243,7 +245,7 @@ const getTimelineData = async (data: Array<object>) => {
   timelineData.init = true; // timeline初始化完毕, 可以开始显示
   await preloadImages(preloadList);
 };
-const updateTimelineData = () => {
+const updateTimelineData = async () => {
   store.subscribe(async (mutation, state) => {
     state = state.timeline;
     if (mutation.type === "timeline/updateTimeline") {
