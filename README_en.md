@@ -15,13 +15,14 @@ In our demo, we utilized modern AI technologies such as RAG to construct spatiot
 ## 📰 News
 - **[2024.11.15]** An editable time-space map of historical figures has been released. You can use AI capabilities (we have set up the coze intelligent agent) to create time-space maps of characters you are interested in. We welcome you to try it out and join the discussion group for the time-space map of historical figures!
 - **[2024.09.29]** The mobile-responsive design has been initially adapted. Please try the demo. Looking forward to your suggestions for improving the design of mobile styles!
+- **[2024.06.28]** Implemented support for ancient maps in the feature_ancient branch. Subsequent development for ancient map features will be handled in a separate repository. Interested members may join the Lark discussion group.
 
 ## 🎥 Demo List
 
 [Time-Space Map of Historical Figures](https://autumnriver.tech/timemap?appName=historygeomap&person=项羽). For more detailed usage and experience methods, please refer to [this document](https://gvy72b8f8g2.feishu.cn/base/Cajlby8PlakNnxsg3Vwcbb5nnOe?table=ldxas3H4wYfgjLo7).
 <figure class="half">
     <div style="display:flex">
-        <div><img src="https://github.com/user-attachments/assets/bb494575-0062-4121-b236-54cb8fd3b6a5" width="100%" /></div>
+        <div><img src="https://github.com/user-attachments/assets/4c65fe7c-65ad-4ed4-b53b-af1a542bdf6f" width="100%" /></div>
     </div>
 </figure>
 
