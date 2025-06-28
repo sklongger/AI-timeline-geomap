@@ -3,13 +3,13 @@ const mobileMaxWidth = 600
 const timelineStyleConfig = {
     "containerId": "timeline_container",
     "containerWidth": null,
-    "containerHeight": 220,
+    "containerHeight": 210,
     "containerOffset": 0,//垂直偏移，向上偏移为正
     "activeFlag": 0,
     "offset": 0,
     "flagWidth": 150,//每个flag的宽度
     "flagMargin": null,//每个flag之间的间距
-    "flagHeight": 48,
+    "flagHeight": 42,
     "init": false,
     "ruler": null,
     "rulerNum": 12,//在时间轴上显示的刻度数量
@@ -38,7 +38,7 @@ const earthStyleConfig = {
 }
 
 const cardStyleConfig = {
-    'maxWidth': '500px',
+    'maxWidth': '400px',
     'cardPaddingLeft': '40%',
     'cardTitleSize': '16px',
     'cardParagraphMargin': '30px',

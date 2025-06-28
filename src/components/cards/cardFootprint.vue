@@ -232,7 +232,7 @@ onMounted(async () => {
     .search_container {
         position: fixed;
         width: 100%;
-        top: 20px;
+        top: 10px;
         left: 0;
         z-index: 100;
 
@@ -249,9 +249,9 @@ onMounted(async () => {
         border-radius: 10px;
         background: #e5e5e5;
         width: var(--card-width--);
-        height: 90%;
+        height: 95%;
         overflow-y: auto;
-        border-bottom: 16px solid transparent;   
+        border-bottom: 16px solid transparent;
 
         .img-container {
             padding: 0px;
