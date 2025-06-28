@@ -28,12 +28,14 @@
     "internmap": "^2.0.3",
     "mapbox-gl": "^3.9.3",
     "rxjs": "^7.8.1",
+    "swiper": "^11.2.5",
     "vue": "^3.4.29",
     "vue-gtag": "^2.0.1",
     "vue-router": "^4.4.0",
     "vuex": "^4.1.0"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "^4.0.12",
     "@types/d3": "^7.4.3",
     "@types/node": "^20.16.7",
     "@types/vue": "^2.0.0",
@@ -46,6 +48,7 @@
     "sharp": "^0.33.5",
     "style-loader": "^4.0.0",
     "svgo": "^3.3.2",
+    "tailwindcss": "^4.0.12",
     "ts-loader": "^9.5.1",
     "vite": "^5.3.1",
     "vite-plugin-image-optimizer": "^1.1.8",

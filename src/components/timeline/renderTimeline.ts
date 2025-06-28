@@ -2,6 +2,7 @@ const ONEDAYMILLSECONDS = 24 * 60 * 60 * 1000;
 
 export enum TimelineType {
     TECHNEWS = 'technews',
+    DAILYNEWS = 'dailynews',
     HISTORYGEOMAP = 'historygeomap'
 }
 export interface TimelineData {

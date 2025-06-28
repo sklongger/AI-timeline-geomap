@@ -3,6 +3,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import map from '@/views/map.vue';
 import IntroMap from '@/scenarios/intro/map.vue';
 import VideoMap from '@/scenarios/video/map.vue';
+import DailyNewsMap from '@/scenarios/dailynews/map.vue';
 
 const routes: Array<RouteRecordRaw> = [
     { path: "/", redirect: "/timemap" },
@@ -20,6 +21,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/scenario/video/timemap',
         name: 'videomap',
         component: VideoMap
+    },
+    {
+        path: '/scenario/dailynews/timemap',
+        name: 'dailynewsmap',
+        component: DailyNewsMap
     },
 ];
 

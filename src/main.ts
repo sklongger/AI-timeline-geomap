@@ -4,6 +4,7 @@ import 'ant-design-vue/dist/reset.css'
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@/style.css'
 import VueGtag from "vue-gtag";
+import '@/assets/tailwind.css'
 
 import {TimelineFlag, TimelineDrag} from '@/components/timeline/directives.ts'
 import store from '@/store/store.ts';

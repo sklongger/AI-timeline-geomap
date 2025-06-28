@@ -17,6 +17,8 @@ export async function loadStyle(appName: string, store: Store<any>) {
         ({ timelineStyleConfig, earthStyleConfig, cardStyleConfig, isMobile, mode } = await import(`@/../config/historyGeoMapStyleConfig.ts`))
     } else if (appName == TimelineType.TECHNEWS) {
         ({ timelineStyleConfig, earthStyleConfig, cardStyleConfig, isMobile } = await import(`@/../config/techNewsStyleConfig.ts`))
+    } else if (appName == TimelineType.DAILYNEWS) {
+        ({ timelineStyleConfig, earthStyleConfig, cardStyleConfig, isMobile } = await import(`@/../config/dailyNewsStyleConfig.ts`))
     }
 
     store.commit('style/updateStyle', {

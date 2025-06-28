@@ -43,7 +43,7 @@ const initMap = async () => {
   const accessToken =
     "pk.eyJ1IjoiZmdqZ2ZrIiwiYSI6ImNtNTEyOXd0bzFwbTkyam9ocG53aDdtaG4ifQ.LEuSERngbBFz1AmpVG8N0Q";
   mapboxgl.accessToken = accessToken;
-  const geojson = await fetch("/world-ancient.json").then((response) => response.json());
+  const geojson = await fetch("/world.json").then((response) => response.json());
   map = new mapboxgl.Map({
     container: mapContainer.value, // 绑定到DOM元素
     style: {
@@ -89,23 +89,23 @@ const initMap = async () => {
         "fill-color": [
           "match", // 使用 match 表达式
           ["get", "name"], // 获取 GeoJSON 中的 name 属性
-          "宋",
+          "China",
           "rgb(233, 78, 27)",
-          "宋_2",
+          "Taiwan",
           "rgb(233, 78, 27)",
-          "契丹",
+          "Japan",
           "rgb(245, 245, 220)",
-          "黠戛斯-斡朗改",
+          "Vietnam",
           "rgb(139, 69, 19)",
-          "西夏",
+          "Russia",
           "rgb(255, 204, 0)",
-          "黄头回鹘",
+          "Mongolia",
           "rgb(0, 128, 0)",
-          "高昌回鹘",
+          "North Korea",
           "rgb(25, 25, 112)",
-          "大理",
+          "South Korea",
           "rgb(139, 0, 0)",
-          "吐蕃",
+          "India",
           "rgb(210, 180, 140)",
           "高丽",
           "rgb(255, 165, 0)",

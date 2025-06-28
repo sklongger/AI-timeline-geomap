@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { visualizer } from 'rollup-plugin-visualizer';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
+import tailwindcss from '@tailwindcss/vite'
 
 const env = process.env.NODE_ENV
 const base = env === 'production' ? '/' : '/'
@@ -23,6 +24,7 @@ export default defineConfig({
     // },
   },
   plugins: [
+    tailwindcss(),
     vue(),
     visualizer({
       open: true, // 打包后自动打开报告
