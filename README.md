@@ -14,12 +14,14 @@
 
 - **[2024.11.15]** 发布了可编辑的历史人物-时空地图，你可以借助AI能力（我们搭建了coze智能体），创建感兴趣的人物的时空地图，欢迎体验，欢迎加入历史人物时空地图的讨论群！
 - **[2024.09.29]** 初步适配移动端，欢迎尝试demo，期待您对移动端样式设计的改进建议！
+- **[2024.06.28]** 在feature_ancient分支实现了对古代地图的支持，获取古代地图的支持将另起仓库，感兴趣的同学可加入飞书讨论
 
 ## 🎥 Demo List
+
 [历史人物时空地图](https://autumnriver.tech/timemap?appName=historygeomap&person=项羽)。 更详细的使用、体验方法，请参考[此文档](https://gvy72b8f8g2.feishu.cn/base/Cajlby8PlakNnxsg3Vwcbb5nnOe?table=ldxas3H4wYfgjLo7)。
 <figure class="half">
     <div style="display:flex">
-        <div><img src="https://github.com/user-attachments/assets/bb494575-0062-4121-b236-54cb8fd3b6a5" width="100%" /></div>
+        <div><img src="https://github.com/user-attachments/assets/4c65fe7c-65ad-4ed4-b53b-af1a542bdf6f" width="100%" /></div>
     </div>
 </figure>
 
